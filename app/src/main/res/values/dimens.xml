@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="font_big">24dp</dimen>
+  <dimen name="font_medium">40dp</dimen>
+  <dimen name="font_small">60dp</dimen>
+
+  <dimen name="gap_big">10dp</dimen>
+  <dimen name="gap_medium">30dp</dimen>
+  <dimen name="gap_small">60dp</dimen>
+
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_bgm"/>
+        <!--android:onClick="switchToMain"/>-->
+
+    <item
+        android:id="@+id/navigation_kontakt"
+        android:icon="@drawable/ic_kontakt_black"
+        android:title="@string/title_kontakt"/>
+        <!--android:onClick="switchToKontakt"/>-->
+
+    <item
+        android:id="@+id/navigation_impressum"
+        android:icon="@drawable/ic_impressum_black"
+        android:title="@string/title_impressum"/>
+        <!--android:onClick="switchToImpressum"/>-->
+
+</menu>

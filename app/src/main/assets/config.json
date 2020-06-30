@@ -1,0 +1,64 @@
+{   
+	"currentCompany": "flughafen",
+	"url": "https://www.bloomergym.de/",
+	"description": "A really long description that needs multiple lines.\nThis is a sample project to illustrate why JSON is not a good configuration format. This description is pretty long, but it doesn't have any way to go onto multiple lines.",
+	"version": "0.0.1",
+	"main": "index.js",
+	"//": "This is as close to a comment as you are going to get",
+	"keywords": ["example", "config"],
+	"scripts": {
+		"test": "./test.sh",
+		"do_stuff": "./do_stuff.sh"
+	},
+	"companies":[
+        {
+			"id":"flughafen", 
+			"name":"Flughafen München", 
+			"AOK": "true",
+			"chosen_programs": [
+				"Aktive Pause",
+				"Power Nap",
+				"Meditation",
+				"Augenyoga"
+			]
+		},
+        {
+			"id":"fraunhofer", 
+			"name":"Fraunhofer", 
+			"AOK":"false",
+			"chosen_programs": [
+				"Aktive Pause",
+				"Augenyoga"
+			]
+		}
+	],
+	"programs":[
+		{
+			"name": "Aktive Pause",
+			"media": "cat2",
+			"description": "In der aktive Pause regenerierst Du...",
+			"health_fact": "Wusstest du, dass schon 10 Minuten an der frischen Luft dein Gehirn auf Hochtouren bringen?",
+			"star_average": "5.0"
+		}, {
+			"name": "Augenyoga",
+			"media": "cat3",
+			"description": "Mit Augeyoga sorgst du für Durchblick. Konzentriere dich auf einen Punkt der weiter als 4 Meter vor dir liegt und folge den Anweisungen",
+			"health_fact": "Wusstest du, dass sich Deine Augen nach einem langen Tag am Bildschirm freuen, wenn du sie entspannst? Damit verringerste du dein Risiko auf Fehlsichtigkeit im Alter um 30%",
+			"star_average": "4.8"
+		},
+		{
+			"name": "Meditation",
+			"media": "cat1",
+			"description": "Mit Meditation geht alles besser...",
+			"health_fact": "Wusstest du, dass du beim Meditieren...?",
+			"star_average": "4.7"
+		},
+		{
+			"name": "Power Nap",
+			"media": "cat5",
+			"description": "Nach einem Power Nap bist du wie ausgewechselt...",
+			"health_fact": "Wusstest du, dass schon wenige Minuten...?",
+			"star_average": "4.9"
+		}
+	]
+}
