@@ -107,9 +107,16 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
 
 //            currentCompany?.chosen_programs?.forEach { p -> createButton(p)}//Log.i("Kotlin", "Todo: create button" )
                 //val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, chosenPrograms)
-                val adapter = ArrayAdapter<String>(this, R.layout.overview_item, chosenPrograms)
+
+                Log.i("Kotlin", "overviewactivity: try to create custom adapter with string-array chosenprograms (holds " + chosenPrograms.size + " items)");
+
+                //val adapter = ArrayAdapter<String>(this, R.layout.overview_item, chosenPrograms)
+                val adapter = CustomAdapter(this, R.layout.overview_item2, chosenPrograms, screen_height/3, screen_width/3, (screen_width/resources.getDimension(R.dimen.font_big)).toFloat(), screen_width/25)
+                Log.i("Kotlin", "overviewactivity: try to map custom adapter to gridview");
+
                 gridView.adapter = adapter
 
+                Log.i("Kotlin", "overviewactivity: try to add onitemclicklistener to gridview");
 
                 // add listeners to all items
                 gridView.onItemClickListener =
@@ -143,6 +150,7 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
             // TODO: find list where all buttons are in with height param
 
             // check the max height of buttons
+            /*
             var maxHeight = 0;
             for (item in gridView?.children!!) {
                 // body of loop
@@ -159,7 +167,7 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
                 val params = item?.getLayoutParams()
                 params?.width = maxHeight
                 item?.setLayoutParams(params);
-            }
+            }*/
 
         }//if
         }//fun

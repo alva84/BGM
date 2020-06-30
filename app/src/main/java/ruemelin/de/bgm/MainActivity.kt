@@ -31,14 +31,8 @@ import java.io.IOException
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     val config = "config.json"
+    private lateinit var myConfig: MyConfig
     var currentCompanyTest:Company?=null;
-
-    var companyLogo:ImageView ?= null;
-    var layoutKooperation:LinearLayout ?= null;
-    var textKooperation: TextView?= null;
-    var bloomergymLogo:ImageView ?= null;
-    var aokLogo:ImageView ?= null;
-    var programmLogo:ImageView ?= null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,15 +48,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        // set up logos
-        companyLogo = findViewById(R.id.logoCompany)
-        textKooperation = findViewById(R.id.text_Kooperation)
-        layoutKooperation = findViewById(R.id.layoutKooperation);
-        bloomergymLogo = findViewById(R.id.logoBloomergym)
-
-        aokLogo = findViewById(R.id.logoAOK)
-        programmLogo = findViewById(R.id.logoProgramm)
+        // load config.json
         loadConfig()
+
+        // create UI
+        setupUI()
     }
 
     fun loadConfig(){
@@ -74,7 +64,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         val gson = Gson()
         //val listPersonType = object : TypeToken<List<Person>>() {}.type
-        var myConfig = gson.fromJson(inputString, MyConfig::class.java)
+        myConfig = gson.fromJson(inputString, MyConfig::class.java)
 
         //var persons: List<Post> = gson.fromJson(inputString, listPersonType)
         //persons.forEachIndexed { idx, person -> Log.i("data", "> Item $idx:\n$person") }
@@ -91,6 +81,17 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         myConfig.programs?.forEach { p -> stringBuilder.append(p.name+ ", ") }
 
         Log.i("Kotlin", stringBuilder.toString())
+
+
+    }
+
+    fun setupUI(){
+        var companyLogo:ImageView = findViewById(R.id.logoCompany)
+        var layoutKooperation:LinearLayout = findViewById(R.id.layoutKooperation);
+        var textKooperation: TextView= findViewById(R.id.text_Kooperation)
+        var bloomergymLogo:ImageView = findViewById(R.id.logoBloomergym)
+        var aokLogo:ImageView = findViewById(R.id.logoAOK)
+        var programmLogo:ImageView = findViewById(R.id.logoProgramm)
 
         // Start working with config data
         myConfig.companies?.forEach { c -> if(c.getCompanyId()==myConfig.currentCompany)
@@ -115,7 +116,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
             // resize company logo to 1/6 of screen width
             val params_CompanyLogo = companyLogo?.getLayoutParams()
-            params_CompanyLogo?.width = screen_width/5
+            params_CompanyLogo?.width = screen_width/7
             companyLogo?.setLayoutParams(params_CompanyLogo)
 
             /*val marginParams_CompanyLogo = params_CompanyLogo as MarginLayoutParams
@@ -128,11 +129,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             layoutKooperation?.setLayoutParams(params_Layout);
 
             var params_BloomergymLogo = bloomergymLogo?.getLayoutParams()
-            params_BloomergymLogo?.width = screen_width*2/9 // 7/2 = 3,5
+            params_BloomergymLogo?.width = screen_width/4 // 7/2 = 3,5
             //params_BloomergymLogo?.height = screen_width/(20)
             bloomergymLogo?.setLayoutParams(params_BloomergymLogo);
 
-            textKooperation?.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/50).toFloat())
+            textKooperation?.setTextSize((screen_width/resources.getDimension(R.dimen.font_medium)).toFloat())
 
             // keep AOK logo at default, just resize
             val params_AOKLogo = aokLogo?.getLayoutParams()
@@ -140,8 +141,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             aokLogo?.setLayoutParams(params_AOKLogo)
 
             val params_ProgrammLogo = programmLogo?.getLayoutParams()
-            params_ProgrammLogo?.height = screen_height/3
+            params_ProgrammLogo?.height = screen_height/2
             programmLogo?.setLayoutParams(params_ProgrammLogo)
+            programmLogo.setPadding(0,0,0,200)
 
 
         } else{
@@ -149,7 +151,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
 
     }
-
 
     fun switchToOverview(view: View) {
         Log.i("Kotlin", "called switchToOverview");

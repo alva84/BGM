@@ -6,6 +6,6 @@
 
   <dimen name="gap_big">10dp</dimen>
   <dimen name="gap_medium">30dp</dimen>
-  <dimen name="gap_small">60dp</dimen>
+  <dimen name="gap_small">50dp</dimen>
 
 </resources>
