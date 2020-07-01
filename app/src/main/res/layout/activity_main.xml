@@ -45,8 +45,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#aaaaaa"
-            android:gravity="center_vertical"
+            android:background="#ffffff"
             android:orientation="horizontal">
 
 
@@ -59,7 +58,7 @@
             <ImageView
                 android:id="@+id/logoCompany"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/logo_default" />
 
@@ -72,13 +71,14 @@
                 android:id="@+id/layoutKooperation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="bottom"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/text_Kooperation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                    android:layout_gravity="end"
                     android:text="in Kooperation mit "
                     android:textSize="40sp" />
 
@@ -97,7 +97,7 @@
 
 
                     <View
-                        android:layout_width="30dp"
+                        android:layout_width="15dp"
                         android:layout_height="match_parent" />
 
                     <ImageView
@@ -135,6 +135,14 @@
                 android:contentDescription="Los geht's"
                 android:onClick="switchToOverview"
                 app:srcCompat="@drawable/activebreakflow" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="test"
+                android:onClick="switchCompany"/>
         </LinearLayout>
 
     </LinearLayout>

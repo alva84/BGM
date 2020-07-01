@@ -12,12 +12,14 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
+import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import androidx.core.view.setPadding
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -25,6 +27,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 import java.io.IOException
 
 
@@ -36,6 +39,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //Remove title bar
+        if (supportActionBar != null)
+            supportActionBar?.hide()
+
         setContentView(R.layout.activity_main)
 
         // set up navigation bar
@@ -129,21 +137,22 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             layoutKooperation?.setLayoutParams(params_Layout);
 
             var params_BloomergymLogo = bloomergymLogo?.getLayoutParams()
-            params_BloomergymLogo?.width = screen_width/4 // 7/2 = 3,5
+            params_BloomergymLogo?.width = screen_width/3 // 7/2 = 3,5
             //params_BloomergymLogo?.height = screen_width/(20)
             bloomergymLogo?.setLayoutParams(params_BloomergymLogo);
 
-            textKooperation?.setTextSize((screen_width/resources.getDimension(R.dimen.font_medium)).toFloat())
+            textKooperation?.setTextSize((screen_width/resources.getDimension(R.dimen.font_big)).toFloat())
 
             // keep AOK logo at default, just resize
             val params_AOKLogo = aokLogo?.getLayoutParams()
-            params_AOKLogo?.width = screen_width/5
+            params_AOKLogo?.width = screen_width*2/9
             aokLogo?.setLayoutParams(params_AOKLogo)
 
             val params_ProgrammLogo = programmLogo?.getLayoutParams()
-            params_ProgrammLogo?.height = screen_height/2
+            params_ProgrammLogo?.height = screen_height*2/5
             programmLogo?.setLayoutParams(params_ProgrammLogo)
-            programmLogo.setPadding(0,0,0,200)
+
+            programmLogo.setPadding(0,0,0,screen_height/9)
 
 
         } else{
@@ -186,5 +195,35 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             return false;
         }
     } // end of onNavigationItemSelected
+
+    fun switchCompany(view: View) {
+        var inputString: String?=""
+        try {
+            inputString = applicationContext.assets.open(config).bufferedReader().use { it.readText() }
+        } catch (ioException: IOException) { ioException.printStackTrace() }
+        //Log.i("Kotlin", "read from json: " +inputString)
+
+        val gson = Gson()
+        //val listPersonType = object : TypeToken<List<Person>>() {}.type
+        myConfig = gson.fromJson(inputString, MyConfig::class.java)
+
+        if (myConfig.currentCompany == "flughafen"){
+            myConfig.currentCompany = "fraunhofer"
+        }
+        else if (myConfig.currentCompany == "fraunhofer"){
+            myConfig.currentCompany = "flughafen"
+        }
+
+        var jsonString = gson.toJson(myConfig)
+        val file= File(config)
+        //file.writeText(jsonString)
+
+
+        // load config.json
+        loadConfig()
+
+        // create UI
+        setupUI()
+    }
 }
 

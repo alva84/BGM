@@ -31,7 +31,8 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
 
 
         // Get the Intent that started this activity and extract the string
-        val config_file = intent.getStringExtra(EXTRA_MESSAGE)
+        var config_file = intent.getStringExtra(EXTRA_MESSAGE)
+        if (config_file == null) config_file = config
 
         // Capture the layout's TextView and set the string as its text
         /*val textView = findViewById<TextView>(R.id.textView).apply {
@@ -111,7 +112,7 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
                 Log.i("Kotlin", "overviewactivity: try to create custom adapter with string-array chosenprograms (holds " + chosenPrograms.size + " items)");
 
                 //val adapter = ArrayAdapter<String>(this, R.layout.overview_item, chosenPrograms)
-                val adapter = CustomAdapter(this, R.layout.overview_item2, chosenPrograms, screen_height/3, screen_width/3, (screen_width/resources.getDimension(R.dimen.font_big)).toFloat(), screen_width/25)
+                val adapter = CustomAdapter(this, R.layout.overview_item2, chosenPrograms, screen_height/3, screen_width/3, (screen_width/resources.getDimension(R.dimen.font_big)).toFloat(), screen_width/28)
                 Log.i("Kotlin", "overviewactivity: try to map custom adapter to gridview");
 
                 gridView.adapter = adapter
