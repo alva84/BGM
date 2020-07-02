@@ -6,20 +6,16 @@ import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
+import android.system.ErrnoException
 import android.util.Log
-import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
-import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
-import androidx.core.view.setPadding
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -27,15 +23,15 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
-import java.io.IOException
-
+import java.io.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     val config = "config.json"
     private lateinit var myConfig: MyConfig
-    var currentCompanyTest:Company?=null;
+    var currentCompanyTest:Company?=null
+    private lateinit var mBtmView: BottomNavigationView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,116 +52,132 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        // load config.json
         loadConfig()
-
-        // create UI
         setupUI()
+
+        //make use of bottom navigation bar
+        mBtmView = findViewById(R.id.nav_view)
+        mBtmView.setOnNavigationItemSelectedListener(this)
     }
 
     fun loadConfig(){
-        var inputString: String?=""
+        // try to load config.json from local file dir
+        val file = File(this.filesDir.absolutePath, config)
+        var fis: FileInputStream
+        try{
+            Log.i("Kotlin", "try to open config file from " + file.name)
+            fis = FileInputStream(file)
+            Log.i("Kotlin", "try: file seems to exist, no exception")
+
+        } catch (e: IOException){
+            Log.i("Kotlin", "catch: config.json does not exist locally, will be created from assets: " +e.toString())
+
+            // read config data from asset file
+            var inputString: String?=""
+            try {
+                inputString = applicationContext.assets.open(config).bufferedReader().use { it.readText() }
+                //Log.i("Kotlin", "Read from asset folder: " +inputString)
+            } catch (ioException: IOException) {
+                ioException.printStackTrace()
+                Log.i("Kotlin", "MainActivity: Something went wrong when reading config.json from asset folder")
+            }
+            // and write to the newly create file
+            FileOutputStream(file).use { it.write(inputString?.toByteArray())}
+            fis = FileInputStream(file)
+
+            Log.i("Kotlin", "config file should have been created: " + file.name)
+        }
+
+        // now read from fileinputstream and fill myConfig
         try {
-            inputString = applicationContext.assets.open(config).bufferedReader().use { it.readText() }
-        } catch (ioException: IOException) { ioException.printStackTrace() }
-        //Log.i("Kotlin", "read from json: " +inputString)
-
-        val gson = Gson()
-        //val listPersonType = object : TypeToken<List<Person>>() {}.type
-        myConfig = gson.fromJson(inputString, MyConfig::class.java)
-
-        //var persons: List<Post> = gson.fromJson(inputString, listPersonType)
-        //persons.forEachIndexed { idx, person -> Log.i("data", "> Item $idx:\n$person") }
-
-        //Initialize the String Builder for debugging
-        var stringBuilder = StringBuilder("\nMyConfig Details\n---------------------")
-        +Log.i("Kotlin",myConfig.currentCompany)
-        stringBuilder.append("\nCurrent company: " + myConfig.currentCompany)
-        stringBuilder.append("\nAll companies: ")
-        //get the all Tags using for Each loop
-        myConfig.companies?.forEach { c -> stringBuilder.append(c.name +" (AOK = "+ c.AOK +")"+ ", ") }
-        stringBuilder.append("\nAll programs: ")
-        //get the all Tags using for Each loop
-        myConfig.programs?.forEach { p -> stringBuilder.append(p.name+ ", ") }
-
-        Log.i("Kotlin", stringBuilder.toString())
-
-
+            val inputAsString = fis.bufferedReader().use { it.readText() }
+            Log.i("Kotlin", "read from stored file config.json: " +inputAsString)
+            val gson = Gson()
+            myConfig = gson.fromJson(inputAsString, MyConfig::class.java)
+        } catch (e:FileNotFoundException){
+            Log.i("Kotlin", "catch FileNotFoundException: " + e.toString())
+        }
     }
 
     fun setupUI(){
-        var companyLogo:ImageView = findViewById(R.id.logoCompany)
-        var layoutKooperation:LinearLayout = findViewById(R.id.layoutKooperation);
-        var textKooperation: TextView= findViewById(R.id.text_Kooperation)
-        var bloomergymLogo:ImageView = findViewById(R.id.logoBloomergym)
-        var aokLogo:ImageView = findViewById(R.id.logoAOK)
-        var programmLogo:ImageView = findViewById(R.id.logoProgramm)
+        val companyLogo:ImageView = findViewById(R.id.logoCompany)
+        val layoutKooperation:LinearLayout = findViewById(R.id.layoutKooperation)
+        val textKooperation: TextView= findViewById(R.id.text_Kooperation)
+        val bloomergymLogo:ImageView = findViewById(R.id.logoBloomergym)
+        val aokLogo:ImageView = findViewById(R.id.logoAOK)
+        val programmLogo:ImageView = findViewById(R.id.logoProgramm)
 
         // Start working with config data
         myConfig.companies?.forEach { c -> if(c.getCompanyId()==myConfig.currentCompany)
         { this.currentCompanyTest=c
-            Log.i("Kotlin","Found match between "+ c.getCompanyId() + " and " +myConfig.currentCompany + "- looking for logo named logo_" + myConfig.currentCompany+".png now");
+            Log.i("Kotlin","Found match between "+ c.getCompanyId() + " and " +myConfig.currentCompany + "- looking for logo named logo_" + myConfig.currentCompany+".png now")
         }
-        else { Log.i("Kotlin", c.getCompanyId() + " does not match " +myConfig.currentCompany);}}
-        Log.i("Kotlin", "Todo: set logo to the one of " + (currentCompanyTest?.printOut() ?: currentCompanyTest));
+        else { //Log.i("Kotlin", c.getCompanyId() + " does not match " +myConfig.currentCompany)
+        }}
+        //Log.i("Kotlin", "Todo: set logo to the one of " + (currentCompanyTest?.printOut() ?: currentCompanyTest))
 
         // get resource id based on config file and set the logo accordingly, leads e.g. to R.drawable.logo_flughafen
-        val resLogo:Int = this.getResources().getIdentifier("logo_" + myConfig.currentCompany, "drawable", this.getPackageName());
+        val resLogo:Int = this.getResources().getIdentifier("logo_" + myConfig.currentCompany, "drawable", this.getPackageName())
         val drawable: Drawable? = ResourcesCompat.getDrawable(resources, resLogo, null)
-        companyLogo?.setImageDrawable(drawable);
+        companyLogo.setImageDrawable(drawable)
 
 
-        var screen_width = Resources.getSystem().getDisplayMetrics().widthPixels
-        var screen_height = Resources.getSystem().getDisplayMetrics().heightPixels
+        val screen_width = Resources.getSystem().getDisplayMetrics().widthPixels
+        val screen_height = Resources.getSystem().getDisplayMetrics().heightPixels
 
 
-        Log.i("Kotlin", "Todo: înclude AOK logo or not: " + (currentCompanyTest?.AOK ?: currentCompanyTest));
+        Log.i("Kotlin", "Todo: înclude AOK logo or not: " + (currentCompanyTest?.AOK ?: currentCompanyTest))
         if (currentCompanyTest?.AOK == true){
 
             // resize company logo to 1/6 of screen width
-            val params_CompanyLogo = companyLogo?.getLayoutParams()
-            params_CompanyLogo?.width = screen_width/7
-            companyLogo?.setLayoutParams(params_CompanyLogo)
+            val params_CompanyLogo = companyLogo.getLayoutParams()
+            params_CompanyLogo.width = screen_width/7
+            params_CompanyLogo.height = screen_height/4
+            companyLogo.setLayoutParams(params_CompanyLogo)
 
             /*val marginParams_CompanyLogo = params_CompanyLogo as MarginLayoutParams
             marginParams_CompanyLogo.setMargins(screen_width/10,0,screen_width/10,0);
             layoutKooperation?.setLayoutParams(marginParams_CompanyLogo);*/
 
             // resize middle part
-            var params_Layout = layoutKooperation?.getLayoutParams()
-            params_Layout?.width = screen_width*4/9 // 15/4 = 3,75
-            layoutKooperation?.setLayoutParams(params_Layout);
+            val params_Layout = layoutKooperation.getLayoutParams()
+            params_Layout.width = screen_width*4/9 // 15/4 = 3,75
+            layoutKooperation.setLayoutParams(params_Layout)
 
-            var params_BloomergymLogo = bloomergymLogo?.getLayoutParams()
-            params_BloomergymLogo?.width = screen_width/3 // 7/2 = 3,5
+            val params_BloomergymLogo = bloomergymLogo.getLayoutParams()
+            params_BloomergymLogo.width = screen_width/3 // 7/2 = 3,5
             //params_BloomergymLogo?.height = screen_width/(20)
-            bloomergymLogo?.setLayoutParams(params_BloomergymLogo);
+            bloomergymLogo.setLayoutParams(params_BloomergymLogo)
 
-            textKooperation?.setTextSize((screen_width/resources.getDimension(R.dimen.font_big)).toFloat())
+            textKooperation.setTextSize((screen_width/resources.getDimension(R.dimen.font_big)).toFloat())
 
-            // keep AOK logo at default, just resize
-            val params_AOKLogo = aokLogo?.getLayoutParams()
-            params_AOKLogo?.width = screen_width*2/9
-            aokLogo?.setLayoutParams(params_AOKLogo)
+            // show AOK logo, and resize
+            logoAOK.isVisible=true;
+            val params_AOKLogo = aokLogo.getLayoutParams()
+            params_AOKLogo.width = screen_width*2/9
+            aokLogo.setLayoutParams(params_AOKLogo)
 
-            val params_ProgrammLogo = programmLogo?.getLayoutParams()
-            params_ProgrammLogo?.height = screen_height*2/5
-            programmLogo?.setLayoutParams(params_ProgrammLogo)
+            val params_ProgrammLogo = programmLogo.getLayoutParams()
+            params_ProgrammLogo.height = screen_height*2/5
+            programmLogo.setLayoutParams(params_ProgrammLogo)
 
             programmLogo.setPadding(0,0,0,screen_height/9)
 
 
         } else{
-            logoAOK?.isVisible=false;
+            // hide AOK logo
+            logoAOK?.isVisible=false
+            Log.i("Kotlin", "no AOK logo required, setup UI accordingly")
+
         }
 
     }
 
     fun switchToOverview(view: View) {
-        Log.i("Kotlin", "called switchToOverview");
+        Log.i("Kotlin", "called switchToOverview")
         //val editText = findViewById<EditText>(R.id.editText)
         //val message = editText.text.toString()
-        val message = config;
+        val message = config
         val i = Intent(this, OverviewActivity::class.java).apply {
             putExtra(EXTRA_MESSAGE, message)
         }
@@ -176,54 +188,41 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         Log.i(
                 "Kotlin",
                 "called MainActivity > onNaviagtionItemSelected. Selected item was " + p0.itemId
-        );
+        )
 
-        var i: Intent? = null;
+        var i: Intent? = null
 
         if (p0.itemId == R.id.navigation_home) {
             //i = Intent(this, MainActivity::class.java);
         } else if (p0.itemId == R.id.navigation_kontakt) {
-            i = Intent(this, KontaktActivity::class.java);
+            i = Intent(this, KontaktActivity::class.java)
         } else if (p0.itemId == R.id.navigation_impressum) {
-            i = Intent(this, ImpressumActivity::class.java);
+            i = Intent(this, ImpressumActivity::class.java)
         }
 
         if (i != null) {
-            startActivity(i);
-            return true;
+            startActivity(i)
+            return true
         } else {
-            return false;
+            return false
         }
     } // end of onNavigationItemSelected
 
     fun switchCompany(view: View) {
-        var inputString: String?=""
-        try {
-            inputString = applicationContext.assets.open(config).bufferedReader().use { it.readText() }
-        } catch (ioException: IOException) { ioException.printStackTrace() }
-        //Log.i("Kotlin", "read from json: " +inputString)
-
-        val gson = Gson()
-        //val listPersonType = object : TypeToken<List<Person>>() {}.type
-        myConfig = gson.fromJson(inputString, MyConfig::class.java)
-
+        //change value locally and in file
         if (myConfig.currentCompany == "flughafen"){
             myConfig.currentCompany = "fraunhofer"
         }
         else if (myConfig.currentCompany == "fraunhofer"){
             myConfig.currentCompany = "flughafen"
         }
-
+        val gson = Gson()
         var jsonString = gson.toJson(myConfig)
-        val file= File(config)
-        //file.writeText(jsonString)
+        var newFile:File = File(this.filesDir.absolutePath, config)
 
+        FileOutputStream(newFile).use { it.write(jsonString?.toByteArray())}
 
-        // load config.json
-        loadConfig()
-
-        // create UI
+        // re-create UI
         setupUI()
     }
 }
-

@@ -19,7 +19,6 @@ import java.io.IOException
 class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
 
     private lateinit var mBtmView: BottomNavigationView
-    private var buttonId = 0
 
     private val config = "config.json"
     private var myConfig: MyConfig? = null
@@ -29,24 +28,22 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
 
-
         // Get the Intent that started this activity and extract the string
         var config_file = intent.getStringExtra(EXTRA_MESSAGE)
         if (config_file == null) config_file = config
 
-        // Capture the layout's TextView and set the string as its text
-        /*val textView = findViewById<TextView>(R.id.textView).apply {
-            text = config_file
-        }*/
-
-        loadConfig(config_file);
-        setupUI();
-
+        loadConfig(config_file)
+        setupUI()
 
         //make use of bottom navigation bar
-        mBtmView = findViewById(R.id.nav_view);
-        mBtmView.setOnNavigationItemSelectedListener(this);
-        //mBtmView.getMenu().findItem(R.id.action_yoga).setChecked(true);
+        mBtmView = findViewById(R.id.nav_view)
+        mBtmView.setOnNavigationItemSelectedListener(this)
+
+        mBtmView.menu.setGroupCheckable(0, true, false)
+        for (i in 0 until mBtmView.menu.size()) {
+            mBtmView.menu.getItem(i).isChecked = false
+        }
+        mBtmView.menu.setGroupCheckable(0, true, true)
     }
 
     fun loadConfig(filename: String) {
@@ -200,7 +197,7 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
             i = Intent(this, KontaktActivity::class.java);
         }
         else if (p0.itemId == R.id.navigation_impressum){
-            //i = Intent(this, ImpressumActivity::class.java);
+            i = Intent(this, ImpressumActivity::class.java);
         }
 
         if (i != null) {
