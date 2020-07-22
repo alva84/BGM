@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="ruemelin.de.bgm.ui.home.HomeFragment"
-        android:label="@string/title_bgm"
+        android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_kontakt"
+        android:id="@+id/navigation_team"
         android:name="ruemelin.de.bgm.ui.dashboard.DashboardFragment"
-        android:label="@string/title_kontakt"
+        android:label="@string/title_team"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment

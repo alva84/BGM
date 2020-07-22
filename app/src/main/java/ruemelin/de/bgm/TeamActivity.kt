@@ -2,16 +2,13 @@ package ruemelin.de.bgm
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class KontaktActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
+class TeamActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
 
     private lateinit var mBtmView: BottomNavigationView
 
@@ -21,7 +18,7 @@ class KontaktActivity : AppCompatActivity(), BottomNavigationView.OnNavigationIt
 
         //make use of bottom navigation bar
         mBtmView = findViewById(R.id.nav_view);
-        mBtmView.selectedItemId = R.id.navigation_kontakt;
+        mBtmView.selectedItemId = R.id.navigation_team;
         mBtmView.setOnNavigationItemSelectedListener(this);
     }
 
@@ -33,7 +30,7 @@ class KontaktActivity : AppCompatActivity(), BottomNavigationView.OnNavigationIt
         if (p0.itemId == R.id.navigation_home){
             i = Intent(this, MainActivity::class.java);
         }
-        else if (p0.itemId == R.id.navigation_kontakt){
+        else if (p0.itemId == R.id.navigation_team){
             //i = Intent(this, KontaktActivity::class.java);
         }
         else if (p0.itemId == R.id.navigation_impressum){

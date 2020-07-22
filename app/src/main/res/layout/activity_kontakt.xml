@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".KontaktActivity">
+    tools:context=".TeamActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
@@ -24,7 +24,7 @@
         android:layout_height="191dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Emailadresse / Website / Formular um Zoom-Call aufzusetzen"
+        android:text="Emailadresse / Website  / Team nebeneinander: BGM Standardteam, Kathrin, Tamara, Jil, Alisa, Fotos neben einander, Infos drunter"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

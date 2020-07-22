@@ -4,13 +4,13 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_bgm"/>
+        android:title="@string/title_home"/>
         <!--android:onClick="switchToMain"/>-->
 
     <item
-        android:id="@+id/navigation_kontakt"
-        android:icon="@drawable/ic_kontakt_black"
-        android:title="@string/title_kontakt"/>
+        android:id="@+id/navigation_team"
+        android:icon="@drawable/ic_team_hands"
+        android:title="@string/title_team"/>
         <!--android:onClick="switchToKontakt"/>-->
 
     <item

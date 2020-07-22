@@ -16,9 +16,10 @@
 			"name":"Flughafen München", 
 			"AOK": "true",
 			"chosen_programs": [
-				"Aktive Pause",
+				"Regeneration",
 				"Power Nap",
-				"Augenyoga"
+				"Augenyoga",
+				"Meditation"
 			]
 		},
         {
@@ -26,14 +27,14 @@
 			"name":"Fraunhofer", 
 			"AOK":"false",
 			"chosen_programs": [
-				"Aktive Pause",
+				"Regeneration",
 				"Augenyoga"
 			]
 		}
 	],
 	"programs":[
 		{
-			"name": "Aktive Pause",
+			"name": "Regeneration",
 			"media": "cat2",
 			"description": "In der aktive Pause regenerierst Du...",
 			"health_fact": "Wusstest du, dass schon 10 Minuten an der frischen Luft dein Gehirn auf Hochtouren bringen?",

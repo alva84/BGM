@@ -5,12 +5,10 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
-import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import java.io.*
@@ -214,8 +212,8 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
         if (p0.itemId == R.id.navigation_home){
             i = Intent(this, MainActivity::class.java);
         }
-        else if (p0.itemId == R.id.navigation_kontakt){
-            i = Intent(this, KontaktActivity::class.java);
+        else if (p0.itemId == R.id.navigation_team){
+            i = Intent(this, TeamActivity::class.java);
         }
         else if (p0.itemId == R.id.navigation_impressum){
             i = Intent(this, ImpressumActivity::class.java);

@@ -2,11 +2,9 @@ package ruemelin.de.bgm
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
@@ -38,8 +36,8 @@ class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         if (p0.itemId == R.id.navigation_home){
             i = Intent(this, MainActivity::class.java);
         }
-        else if (p0.itemId == R.id.navigation_kontakt){
-            i = Intent(this, KontaktActivity::class.java);
+        else if (p0.itemId == R.id.navigation_team){
+            i = Intent(this, TeamActivity::class.java);
         }
         else if (p0.itemId == R.id.navigation_impressum){
             //i = Intent(this, ImpressumActivity::class.java);

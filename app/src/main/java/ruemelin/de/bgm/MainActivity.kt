@@ -6,13 +6,10 @@ import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
-import android.system.ErrnoException
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
@@ -48,7 +45,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_kontakt, R.id.navigation_impressum))
+                R.id.navigation_home, R.id.navigation_team, R.id.navigation_impressum))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
@@ -101,11 +98,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     fun setupUI(){
         val companyLogo:ImageView = findViewById(R.id.logoCompany)
-        val layoutKooperation:LinearLayout = findViewById(R.id.layoutKooperation)
-        val textKooperation: TextView= findViewById(R.id.text_Kooperation)
-        val bloomergymLogo:ImageView = findViewById(R.id.logoBloomergym)
         val aokLogo:ImageView = findViewById(R.id.logoAOK)
-        val programmLogo:ImageView = findViewById(R.id.logoProgramm)
+        //val layoutKooperation:LinearLayout = findViewById(R.id.layoutKooperation)
+        val rechargeLogo:ImageView = findViewById(R.id.logoRecharge)
+        val rechargeText:ImageView = findViewById(R.id.textRecharge)
 
         // Start working with config data
         myConfig.companies?.forEach { c -> if(c.getCompanyId()==myConfig.currentCompany)
@@ -117,9 +113,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         //Log.i("Kotlin", "Todo: set logo to the one of " + (currentCompanyTest?.printOut() ?: currentCompanyTest))
 
         // get resource id based on config file and set the logo accordingly, leads e.g. to R.drawable.logo_flughafen
-        val resLogo:Int = this.getResources().getIdentifier("logo_" + myConfig.currentCompany, "drawable", this.getPackageName())
-        val drawable: Drawable? = ResourcesCompat.getDrawable(resources, resLogo, null)
-        companyLogo.setImageDrawable(drawable)
+        val resCompanyLogo:Int = this.getResources().getIdentifier("logo_" + myConfig.currentCompany, "drawable", this.getPackageName())
+        val drawableCompanyLogo: Drawable? = ResourcesCompat.getDrawable(resources, resCompanyLogo, null)
+        companyLogo.setImageDrawable(drawableCompanyLogo)
+
+        val resAOKLogo:Int = this.getResources().getIdentifier("logo_aok_by", "drawable", this.getPackageName())
+        val drawableAOKLogo: Drawable? = ResourcesCompat.getDrawable(resources, resAOKLogo, null)
+        aokLogo.setImageDrawable(drawableAOKLogo)
 
 
         val screen_width = Resources.getSystem().getDisplayMetrics().widthPixels
@@ -131,74 +131,46 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         if (currentCompanyTest?.AOK == true){
             Log.i("Kotlin", "AOK logo included: " + (currentCompanyTest?.AOK ?: currentCompanyTest))
 
-            // resize company logo to 1/6 of screen width
-            val params_CompanyLogo = companyLogo.getLayoutParams()
-            params_CompanyLogo.width = screen_width/7
-            params_CompanyLogo.height = screen_height/4
-            companyLogo.setLayoutParams(params_CompanyLogo)
+            // show AOK logo
+            logoAOK.isVisible=true;
 
-            Log.i("Kotlin", "AOK logo width (should be /7 of screen width): " + params_CompanyLogo.width)
-
-
+        } else{
+            // hide AOK logo
+            logoAOK?.isVisible=false
+            Log.i("Kotlin", "no AOK logo required, setup UI accordingly - maybe change margin or padding of company logo to be aligned on right side?")
             /*val marginParams_CompanyLogo = params_CompanyLogo as MarginLayoutParams
             marginParams_CompanyLogo.setMargins(screen_width/10,0,screen_width/10,0);
             layoutKooperation?.setLayoutParams(marginParams_CompanyLogo);*/
 
-            // resize middle part
-            val params_Layout = layoutKooperation.getLayoutParams()
-            params_Layout.width = screen_width*6/10 // 15/4 = 3,75, *4/9 = 0,44, *4/8 = 0,5, *6/10 = 0,6
-            layoutKooperation.setLayoutParams(params_Layout)
-
-            val params_BloomergymLogo = bloomergymLogo.getLayoutParams()
-            params_BloomergymLogo.width = screen_width/3 // 7/2 = 3,5
-            //params_BloomergymLogo?.height = screen_width/(20)
-            bloomergymLogo.setLayoutParams(params_BloomergymLogo)
-
-            textKooperation.setTextSize((screen_width/resources.getDimension(R.dimen.font_big)).toFloat())
-
-            // show AOK logo, and resize
-            logoAOK.isVisible=true;
-            val params_AOKLogo = aokLogo.getLayoutParams()
-            params_AOKLogo.width = screen_width*2/9
-            aokLogo.setLayoutParams(params_AOKLogo)
-
-
-
-        } else{
-
-            // resize company logo to 1/6 of screen width
-            val params_CompanyLogo = companyLogo.getLayoutParams()
-            params_CompanyLogo.width = screen_width/5
-            //params_CompanyLogo.height = screen_height/4
-            companyLogo.setLayoutParams(params_CompanyLogo)
-
-
-            // resize middle part
-            val params_Layout = layoutKooperation.getLayoutParams()
-            params_Layout.width = screen_width*4/9 // 15/4 = 3,75, *4/9 = 0,44, *4/8 = 0,5,
-            layoutKooperation.setLayoutParams(params_Layout)
-
-            val params_BloomergymLogo = bloomergymLogo.getLayoutParams()
-            params_BloomergymLogo.width = screen_width/3 // 7/2 = 3,5
-            //params_BloomergymLogo?.height = screen_width/(20)
-            bloomergymLogo.setLayoutParams(params_BloomergymLogo)
-
-            textKooperation.setTextSize((screen_width/resources.getDimension(R.dimen.font_big)).toFloat())
-
-
-            // hide AOK logo
-            logoAOK?.isVisible=false
-            Log.i("Kotlin", "no AOK logo required, setup UI accordingly")
-
+            // programmLogo.setPadding(0,0,0,screen_height/9)
         }
 
-        val params_ProgrammLogo = programmLogo.getLayoutParams()
-        params_ProgrammLogo.height = screen_height*2/5
-        programmLogo.setLayoutParams(params_ProgrammLogo)
+        // resize company logo to 1/6 of screen width
+        val params_CompanyLogo = companyLogo.getLayoutParams()
+        params_CompanyLogo.height = screen_height/8
+        if (drawableCompanyLogo != null) {
+            params_CompanyLogo.width = drawableCompanyLogo.intrinsicWidth*screen_height/8/drawableCompanyLogo.intrinsicHeight
+        }
+        companyLogo.setLayoutParams(params_CompanyLogo)
 
-        programmLogo.setPadding(0,0,0,screen_height/9)
+        // resize AOK logo
+        val params_AOKLogo = aokLogo.getLayoutParams()
+        params_AOKLogo.height = screen_height/8
+        if (drawableAOKLogo != null) {
+            params_AOKLogo.width = drawableAOKLogo.intrinsicWidth*screen_height/8/drawableAOKLogo.intrinsicHeight
+        }
+        aokLogo.setLayoutParams(params_AOKLogo)
 
+        // resize bloomergym logo
+        val params_rechargeLogo = rechargeLogo.getLayoutParams()
+        params_rechargeLogo.height = screen_height/2
+        rechargeLogo.setLayoutParams(params_rechargeLogo)
 
+        // resize recharge text
+
+        val params_rechargeText = rechargeText.getLayoutParams()
+        params_rechargeText.height = screen_height/8
+        rechargeText.setLayoutParams(params_rechargeText)
     }
 
     fun switchToOverview(view: View) {
@@ -222,8 +194,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         if (p0.itemId == R.id.navigation_home) {
             //i = Intent(this, MainActivity::class.java);
-        } else if (p0.itemId == R.id.navigation_kontakt) {
-            i = Intent(this, KontaktActivity::class.java)
+        } else if (p0.itemId == R.id.navigation_team) {
+            i = Intent(this, TeamActivity::class.java)
         } else if (p0.itemId == R.id.navigation_impressum) {
             i = Intent(this, ImpressumActivity::class.java)
         }

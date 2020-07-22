@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#A7D4DF</color>
-    <color name="colorPrimaryDark">#31859C</color>
-    <color name="colorAccent">#F3929C</color>
+    <color name="BloomergymBlue">#389FBC</color>
+    <color name="BloomergymBlue2">#AEE1ED</color>
+    <color name="BloomergymBlue3">#daf1f7</color>
+    <color name="BloomergymBlue4">#f7fcfd</color>
+    <color name="BloomergymBlue5">#fcfefe</color>
+    <color name="BloomergymRed">#eb594b</color>
+    <color name="BloomergymRed2">#f6b4af</color>
+    <color name="BloomergymRed3">#fbddda</color>
+    <color name="BloomergymRed4">#fdf0ee</color>
+    <color name="BloomergymRed5">#fef9f8</color>
 </resources>
