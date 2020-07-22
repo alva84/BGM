@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
-import java.io.IOException
+import java.io.*
 
 
 class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
@@ -32,7 +32,8 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
         var config_file = intent.getStringExtra(EXTRA_MESSAGE)
         if (config_file == null) config_file = config
 
-        loadConfig(config_file)
+        //Todo: load from local file - also in programactivity
+        loadConfig()
         setupUI()
 
         //make use of bottom navigation bar
@@ -46,20 +47,43 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
         mBtmView.menu.setGroupCheckable(0, true, true)
     }
 
-    fun loadConfig(filename: String) {
+    fun loadConfig(){
+        // try to load config.json from local file dir
+        val file = File(this.filesDir.absolutePath, config)
+        var fis: FileInputStream
+        try{
+            Log.i("Kotlin", "try to open config file from " + file.name)
+            fis = FileInputStream(file)
+            Log.i("Kotlin", "try: file seems to exist, no exception")
 
-        var inputString: String? = ""
-        try {
-            inputString = applicationContext.assets.open(filename).bufferedReader().use { it.readText() }
-        } catch (ioException: IOException) {
-            ioException.printStackTrace()
+        } catch (e: IOException){
+            Log.i("Kotlin", "catch: config.json does not exist locally, will be created from assets: " +e.toString())
+
+            // read config data from asset file
+            var inputString: String?=""
+            try {
+                inputString = applicationContext.assets.open(config).bufferedReader().use { it.readText() }
+                //Log.i("Kotlin", "Read from asset folder: " +inputString)
+            } catch (ioException: IOException) {
+                ioException.printStackTrace()
+                Log.i("Kotlin", "MainActivity: Something went wrong when reading config.json from asset folder")
+            }
+            // and write to the newly create file
+            FileOutputStream(file).use { it.write(inputString?.toByteArray())}
+            fis = FileInputStream(file)
+
+            Log.i("Kotlin", "config file should have been created: " + file.name)
         }
 
-        Log.i("Kotlin", "read from " + filename + ": " + inputString)
-
-        val gson = Gson()
-        //val listPersonType = object : TypeToken<List<Person>>() {}.type
-        myConfig = gson.fromJson(inputString, MyConfig::class.java)
+        // now read from fileinputstream and fill myConfig
+        try {
+            val inputAsString = fis.bufferedReader().use { it.readText() }
+            Log.i("Kotlin", "read from stored file config.json: " +inputAsString)
+            val gson = Gson()
+            myConfig = gson.fromJson(inputAsString, MyConfig::class.java)
+        } catch (e: FileNotFoundException){
+            Log.i("Kotlin", "catch FileNotFoundException: " + e.toString())
+        }
     }
 
     fun setupUI() {
@@ -79,12 +103,9 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
                             "- looking for logo named logo_" + myConfig!!.currentCompany + ".png now"
                 );
             }
-            //myConfig?.companies?.forEach { c -> if(c.name==myConfig?.currentCompany) this.currentCompany=c}
-            Log.i(
-                "Kotlin",
-                "Todo: set logo to the one of " + (currentCompany?.printOut() ?: currentCompany)
-            )
 
+        }
+        if (this.currentCompany != null){
             Log.i(
                 "Kotlin",
                 "Number of chosen programs to integrate: " + currentCompany?.chosen_programs?.size

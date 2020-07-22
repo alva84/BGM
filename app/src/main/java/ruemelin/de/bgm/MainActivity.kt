@@ -125,9 +125,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val screen_width = Resources.getSystem().getDisplayMetrics().widthPixels
         val screen_height = Resources.getSystem().getDisplayMetrics().heightPixels
 
+        Log.i("Kotlin", "Working with screen size " + screen_width +" x " +screen_height)
 
-        Log.i("Kotlin", "Todo: înclude AOK logo or not: " + (currentCompanyTest?.AOK ?: currentCompanyTest))
+
         if (currentCompanyTest?.AOK == true){
+            Log.i("Kotlin", "AOK logo included: " + (currentCompanyTest?.AOK ?: currentCompanyTest))
 
             // resize company logo to 1/6 of screen width
             val params_CompanyLogo = companyLogo.getLayoutParams()
@@ -135,13 +137,16 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             params_CompanyLogo.height = screen_height/4
             companyLogo.setLayoutParams(params_CompanyLogo)
 
+            Log.i("Kotlin", "AOK logo width (should be /7 of screen width): " + params_CompanyLogo.width)
+
+
             /*val marginParams_CompanyLogo = params_CompanyLogo as MarginLayoutParams
             marginParams_CompanyLogo.setMargins(screen_width/10,0,screen_width/10,0);
             layoutKooperation?.setLayoutParams(marginParams_CompanyLogo);*/
 
             // resize middle part
             val params_Layout = layoutKooperation.getLayoutParams()
-            params_Layout.width = screen_width*4/9 // 15/4 = 3,75
+            params_Layout.width = screen_width*6/10 // 15/4 = 3,75, *4/9 = 0,44, *4/8 = 0,5, *6/10 = 0,6
             layoutKooperation.setLayoutParams(params_Layout)
 
             val params_BloomergymLogo = bloomergymLogo.getLayoutParams()
@@ -157,19 +162,42 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             params_AOKLogo.width = screen_width*2/9
             aokLogo.setLayoutParams(params_AOKLogo)
 
-            val params_ProgrammLogo = programmLogo.getLayoutParams()
-            params_ProgrammLogo.height = screen_height*2/5
-            programmLogo.setLayoutParams(params_ProgrammLogo)
-
-            programmLogo.setPadding(0,0,0,screen_height/9)
 
 
         } else{
+
+            // resize company logo to 1/6 of screen width
+            val params_CompanyLogo = companyLogo.getLayoutParams()
+            params_CompanyLogo.width = screen_width/5
+            //params_CompanyLogo.height = screen_height/4
+            companyLogo.setLayoutParams(params_CompanyLogo)
+
+
+            // resize middle part
+            val params_Layout = layoutKooperation.getLayoutParams()
+            params_Layout.width = screen_width*4/9 // 15/4 = 3,75, *4/9 = 0,44, *4/8 = 0,5,
+            layoutKooperation.setLayoutParams(params_Layout)
+
+            val params_BloomergymLogo = bloomergymLogo.getLayoutParams()
+            params_BloomergymLogo.width = screen_width/3 // 7/2 = 3,5
+            //params_BloomergymLogo?.height = screen_width/(20)
+            bloomergymLogo.setLayoutParams(params_BloomergymLogo)
+
+            textKooperation.setTextSize((screen_width/resources.getDimension(R.dimen.font_big)).toFloat())
+
+
             // hide AOK logo
             logoAOK?.isVisible=false
             Log.i("Kotlin", "no AOK logo required, setup UI accordingly")
 
         }
+
+        val params_ProgrammLogo = programmLogo.getLayoutParams()
+        params_ProgrammLogo.height = screen_height*2/5
+        programmLogo.setLayoutParams(params_ProgrammLogo)
+
+        programmLogo.setPadding(0,0,0,screen_height/9)
+
 
     }
 
@@ -208,21 +236,5 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     } // end of onNavigationItemSelected
 
-    fun switchCompany(view: View) {
-        //change value locally and in file
-        if (myConfig.currentCompany == "flughafen"){
-            myConfig.currentCompany = "fraunhofer"
-        }
-        else if (myConfig.currentCompany == "fraunhofer"){
-            myConfig.currentCompany = "flughafen"
-        }
-        val gson = Gson()
-        var jsonString = gson.toJson(myConfig)
-        var newFile:File = File(this.filesDir.absolutePath, config)
 
-        FileOutputStream(newFile).use { it.write(jsonString?.toByteArray())}
-
-        // re-create UI
-        setupUI()
-    }
 }

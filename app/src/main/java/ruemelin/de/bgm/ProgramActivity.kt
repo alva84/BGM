@@ -80,9 +80,11 @@ class ProgramActivity  : AppCompatActivity() {
         val resVideo:Int = this.getResources().getIdentifier(program?.media, "raw", this.getPackageName());
         video.setVideoPath("android.resource://" + getPackageName() + "/" + resVideo);
         val mediaController = MediaController(this)
+        //mediaController.isShowing
         video.setMediaController(mediaController);
         video.requestFocus();
         video.start();
+
 
         if(this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             val params_Video = video.getLayoutParams()

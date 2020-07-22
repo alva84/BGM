@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:text="@string/koops_string"
+                    android:text="@string/koop_string"
                     android:textSize="40sp" />
 
                 <LinearLayout
@@ -135,12 +135,7 @@
                 android:onClick="switchToOverview"
                 app:srcCompat="@drawable/activebreakflow" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:onClick="switchCompany"
-                android:text="test" />
+
         </LinearLayout>
 
     </LinearLayout>

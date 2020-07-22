@@ -28,7 +28,7 @@ public class CustomAdapter : ArrayAdapter<String> {
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        Log.i("Kotlin", "CustomAdapter -> getView() with position = " + position + ", convertview = " + convertView +", parent = " + parent)
+        //Log.i("Kotlin", "CustomAdapter -> getView() with position = " + position + ", convertview = " + convertView +", parent = " + parent)
         var listItemView: View= inflater.inflate(R.layout.overview_item2, parent, false)
         val b: Button = listItemView.findViewById(R.id.program_button)
         b.text = programs?.get(position)
