@@ -1,16 +1,18 @@
 package ruemelin.de.bgm
 
 import android.content.Context
-import android.util.Log
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 
+
 //open public class CustomAdapter() : ArrayAdapter<String>(context:Context, ) {
 public class CustomAdapter : ArrayAdapter<String> {
 
+    private lateinit var c:Context
     private lateinit var inflater: LayoutInflater
     private lateinit var programs: Array<String?>
     private var height =0
@@ -19,6 +21,7 @@ public class CustomAdapter : ArrayAdapter<String> {
     private var padding = 0;
 
     constructor(ctx: Context, i:Int, p: Array<String?>, height: Int, width:Int, textsize:Float, padding:Int) : super(ctx,i,p){
+        this.c=ctx
         this.inflater = LayoutInflater.from(ctx)
         this.programs=p
          this.height=height
@@ -29,7 +32,7 @@ public class CustomAdapter : ArrayAdapter<String> {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         //Log.i("Kotlin", "CustomAdapter -> getView() with position = " + position + ", convertview = " + convertView +", parent = " + parent)
-        var listItemView: View= inflater.inflate(R.layout.overview_item2, parent, false)
+        var listItemView: View= inflater.inflate(R.layout.overview_item, parent, false)
         val b: Button = listItemView.findViewById(R.id.program_button)
         b.text = programs?.get(position)
 
@@ -41,6 +44,9 @@ public class CustomAdapter : ArrayAdapter<String> {
         b.setPadding(padding, padding, padding, padding)
 
         b.setTextSize(textSize)
+
+        val robotoLight = Typeface.createFromAsset(context.getAssets(), "Roboto-Light.ttf")
+        b.setTypeface(robotoLight)
 
         return listItemView
     }

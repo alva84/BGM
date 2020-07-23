@@ -35,27 +35,27 @@
 	"programs":[
 		{
 			"name": "Regeneration",
-			"media": "cat2",
+			"media": "cat2.mp4",
 			"description": "In der aktive Pause regenerierst Du...",
 			"health_fact": "Wusstest du, dass schon 10 Minuten an der frischen Luft dein Gehirn auf Hochtouren bringen?",
 			"star_average": "5.0"
 		}, {
 			"name": "Augenyoga",
-			"media": "cat3",
+			"media": "cat3.mp4",
 			"description": "Mit Augeyoga sorgst du für Durchblick. Konzentriere dich auf einen Punkt der weiter als 4 Meter vor dir liegt und folge den Anweisungen",
 			"health_fact": "Wusstest du, dass sich Deine Augen nach einem langen Tag am Bildschirm freuen, wenn du sie entspannst? Damit verringerste du dein Risiko auf Fehlsichtigkeit im Alter um 30%",
 			"star_average": "4.8"
 		},
 		{
 			"name": "Meditation",
-			"media": "cat1",
+			"media": "cat1.mov",
 			"description": "Mit Meditation geht alles besser...",
 			"health_fact": "Wusstest du, dass du beim Meditieren...?",
 			"star_average": "4.7"
 		},
 		{
 			"name": "Power Nap",
-			"media": "cat5",
+			"media": "cat5.mov",
 			"description": "Nach einem Power Nap bist du wie ausgewechselt...",
 			"health_fact": "Wusstest du, dass schon wenige Minuten...?",
 			"star_average": "4.9"

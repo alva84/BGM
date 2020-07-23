@@ -10,7 +10,8 @@
         android:layout_height="463dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        tools:layout_editor_absoluteY="1dp"
+        >
 
         <VideoView
             android:id="@+id/videoView"
@@ -22,7 +23,6 @@
             android:id="@+id/textTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="50dp"
             android:text="Title"
             android:textSize="24sp"
             android:textStyle="bold" />

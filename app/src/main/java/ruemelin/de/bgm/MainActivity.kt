@@ -1,8 +1,8 @@
 package ruemelin.de.bgm
 
-
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
@@ -18,17 +18,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.*
+
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
-    val config = "config.json"
     private lateinit var myConfig: MyConfig
     var currentCompanyTest:Company?=null
     private lateinit var mBtmView: BottomNavigationView
-
+    private lateinit var helper:Helper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +47,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        loadConfig()
+        helper = Helper(applicationContext)
+        myConfig = helper.loadConfig()
         setupUI()
 
         //make use of bottom navigation bar
@@ -57,44 +56,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         mBtmView.setOnNavigationItemSelectedListener(this)
     }
 
-    fun loadConfig(){
-        // try to load config.json from local file dir
-        val file = File(this.filesDir.absolutePath, config)
-        var fis: FileInputStream
-        try{
-            Log.i("Kotlin", "try to open config file from " + file.name)
-            fis = FileInputStream(file)
-            Log.i("Kotlin", "try: file seems to exist, no exception")
-
-        } catch (e: IOException){
-            Log.i("Kotlin", "catch: config.json does not exist locally, will be created from assets: " +e.toString())
-
-            // read config data from asset file
-            var inputString: String?=""
-            try {
-                inputString = applicationContext.assets.open(config).bufferedReader().use { it.readText() }
-                //Log.i("Kotlin", "Read from asset folder: " +inputString)
-            } catch (ioException: IOException) {
-                ioException.printStackTrace()
-                Log.i("Kotlin", "MainActivity: Something went wrong when reading config.json from asset folder")
-            }
-            // and write to the newly create file
-            FileOutputStream(file).use { it.write(inputString?.toByteArray())}
-            fis = FileInputStream(file)
-
-            Log.i("Kotlin", "config file should have been created: " + file.name)
-        }
-
-        // now read from fileinputstream and fill myConfig
-        try {
-            val inputAsString = fis.bufferedReader().use { it.readText() }
-            Log.i("Kotlin", "read from stored file config.json: " +inputAsString)
-            val gson = Gson()
-            myConfig = gson.fromJson(inputAsString, MyConfig::class.java)
-        } catch (e:FileNotFoundException){
-            Log.i("Kotlin", "catch FileNotFoundException: " + e.toString())
-        }
-    }
 
     fun setupUI(){
         val companyLogo:ImageView = findViewById(R.id.logoCompany)
@@ -110,64 +71,68 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
         else { //Log.i("Kotlin", c.getCompanyId() + " does not match " +myConfig.currentCompany)
         }}
-        //Log.i("Kotlin", "Todo: set logo to the one of " + (currentCompanyTest?.printOut() ?: currentCompanyTest))
 
         // get resource id based on config file and set the logo accordingly, leads e.g. to R.drawable.logo_flughafen
-        val resCompanyLogo:Int = this.getResources().getIdentifier("logo_" + myConfig.currentCompany, "drawable", this.getPackageName())
+        /*val resCompanyLogo:Int = this.getResources().getIdentifier("logo_" + myConfig.currentCompany, "drawable", this.getPackageName())
         val drawableCompanyLogo: Drawable? = ResourcesCompat.getDrawable(resources, resCompanyLogo, null)
         companyLogo.setImageDrawable(drawableCompanyLogo)
+        */
 
-        val resAOKLogo:Int = this.getResources().getIdentifier("logo_aok_by", "drawable", this.getPackageName())
-        val drawableAOKLogo: Drawable? = ResourcesCompat.getDrawable(resources, resAOKLogo, null)
-        aokLogo.setImageDrawable(drawableAOKLogo)
+        //TODO: handle that image is not there
+        val companyLogoBitmap: Bitmap? = helper.getLogoBitmap(myConfig.currentCompany)
+        companyLogo.setImageBitmap(companyLogoBitmap)
 
+        var aokLogoBitmap: Bitmap? = null
+        var drawableAOKLogo : Drawable? = null;
+        if (helper.getLogoBitmap("aok_by") != null){
+             aokLogoBitmap = helper.getLogoBitmap("aok_by")
+            aokLogo.setImageBitmap(aokLogoBitmap)
+        } else {
+            val resAOKLogo:Int = this.getResources().getIdentifier("logo_aok_by", "drawable", this.getPackageName())
+            drawableAOKLogo = ResourcesCompat.getDrawable(resources, resAOKLogo, null)
+            aokLogo.setImageDrawable(drawableAOKLogo)
+        }
 
         val screen_width = Resources.getSystem().getDisplayMetrics().widthPixels
         val screen_height = Resources.getSystem().getDisplayMetrics().heightPixels
 
-        Log.i("Kotlin", "Working with screen size " + screen_width +" x " +screen_height)
-
-
         if (currentCompanyTest?.AOK == true){
-            Log.i("Kotlin", "AOK logo included: " + (currentCompanyTest?.AOK ?: currentCompanyTest))
-
             // show AOK logo
             logoAOK.isVisible=true;
-
         } else{
             // hide AOK logo
             logoAOK?.isVisible=false
-            Log.i("Kotlin", "no AOK logo required, setup UI accordingly - maybe change margin or padding of company logo to be aligned on right side?")
-            /*val marginParams_CompanyLogo = params_CompanyLogo as MarginLayoutParams
-            marginParams_CompanyLogo.setMargins(screen_width/10,0,screen_width/10,0);
-            layoutKooperation?.setLayoutParams(marginParams_CompanyLogo);*/
-
-            // programmLogo.setPadding(0,0,0,screen_height/9)
         }
 
-        // resize company logo to 1/6 of screen width
+        // resize company logo to 1/8 of screen height
         val params_CompanyLogo = companyLogo.getLayoutParams()
         params_CompanyLogo.height = screen_height/8
-        if (drawableCompanyLogo != null) {
+        /*if (drawableCompanyLogo != null) {
             params_CompanyLogo.width = drawableCompanyLogo.intrinsicWidth*screen_height/8/drawableCompanyLogo.intrinsicHeight
+        }*/
+        if (companyLogoBitmap != null) {
+            params_CompanyLogo.width = companyLogoBitmap.width*screen_height/8/companyLogoBitmap.height
         }
         companyLogo.setLayoutParams(params_CompanyLogo)
 
         // resize AOK logo
         val params_AOKLogo = aokLogo.getLayoutParams()
         params_AOKLogo.height = screen_height/8
-        if (drawableAOKLogo != null) {
-            params_AOKLogo.width = drawableAOKLogo.intrinsicWidth*screen_height/8/drawableAOKLogo.intrinsicHeight
+        if (aokLogoBitmap != null) {
+            params_AOKLogo.width = aokLogoBitmap.width*screen_height/8/aokLogoBitmap.height
+        } else {
+            if (drawableAOKLogo != null){
+                params_AOKLogo.width = drawableAOKLogo.intrinsicWidth*screen_height/8/drawableAOKLogo.intrinsicHeight
+            }
         }
         aokLogo.setLayoutParams(params_AOKLogo)
 
-        // resize bloomergym logo
+        // resize recharge logo
         val params_rechargeLogo = rechargeLogo.getLayoutParams()
-        params_rechargeLogo.height = screen_height/2
+        params_rechargeLogo.height = screen_height/7*3
         rechargeLogo.setLayoutParams(params_rechargeLogo)
 
         // resize recharge text
-
         val params_rechargeText = rechargeText.getLayoutParams()
         params_rechargeText.height = screen_height/8
         rechargeText.setLayoutParams(params_rechargeText)
@@ -175,9 +140,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     fun switchToOverview(view: View) {
         Log.i("Kotlin", "called switchToOverview")
-        //val editText = findViewById<EditText>(R.id.editText)
-        //val message = editText.text.toString()
-        val message = config
+        val message = "dummy"
         val i = Intent(this, OverviewActivity::class.java).apply {
             putExtra(EXTRA_MESSAGE, message)
         }
@@ -185,11 +148,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-        Log.i(
-                "Kotlin",
-                "called MainActivity > onNaviagtionItemSelected. Selected item was " + p0.itemId
-        )
-
         var i: Intent? = null
 
         if (p0.itemId == R.id.navigation_home) {
@@ -207,6 +165,5 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             return false
         }
     } // end of onNavigationItemSelected
-
 
 }

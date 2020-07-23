@@ -15,8 +15,8 @@ class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
 
     private lateinit var mBtmView: BottomNavigationView
     private lateinit var myConfig: MyConfig
+    private lateinit var helper:Helper
     val config = "config.json"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +26,7 @@ class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         mBtmView = findViewById(R.id.nav_view);
         mBtmView.selectedItemId = R.id.navigation_impressum;
         mBtmView.setOnNavigationItemSelectedListener(this);
+        helper = Helper(applicationContext)
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
@@ -52,49 +53,9 @@ class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
     }
 
-    fun loadConfig(){
-        // try to load config.json from local file dir
-        val file = File(this.filesDir.absolutePath, config)
-        var fis: FileInputStream
-        try{
-            Log.i("Kotlin", "try to open config file from " + file.name)
-            fis = FileInputStream(file)
-            Log.i("Kotlin", "try: file seems to exist, no exception")
-
-        } catch (e: IOException){
-            Log.i("Kotlin", "catch: config.json does not exist locally, will be created from assets: " +e.toString())
-
-            // read config data from asset file
-            var inputString: String?=""
-            try {
-                inputString = applicationContext.assets.open(config).bufferedReader().use { it.readText() }
-                //Log.i("Kotlin", "Read from asset folder: " +inputString)
-            } catch (ioException: IOException) {
-                ioException.printStackTrace()
-                Log.i("Kotlin", "MainActivity: Something went wrong when reading config.json from asset folder")
-            }
-            // and write to the newly create file
-            FileOutputStream(file).use { it.write(inputString?.toByteArray())}
-            fis = FileInputStream(file)
-
-            Log.i("Kotlin", "config file should have been created: " + file.name)
-        }
-
-        // now read from fileinputstream and fill myConfig
-        try {
-            val inputAsString = fis.bufferedReader().use { it.readText() }
-            Log.i("Kotlin", "read from stored file config.json: " +inputAsString)
-            val gson = Gson()
-            myConfig = gson.fromJson(inputAsString, MyConfig::class.java)
-        } catch (e: FileNotFoundException){
-            Log.i("Kotlin", "catch FileNotFoundException: " + e.toString())
-        }
-    }
-
     fun switchCompany(view: View) {
 
-        loadConfig()
-
+        myConfig = helper.loadConfig()
         //change value locally and in file
         if (myConfig.currentCompany == "flughafen"){
             myConfig.currentCompany = "fraunhofer"
@@ -104,9 +65,9 @@ class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
         val gson = Gson()
         var jsonString = gson.toJson(myConfig)
-        var newFile: File = File(this.filesDir.absolutePath, config)
 
-        FileOutputStream(newFile).use { it.write(jsonString?.toByteArray())}
+
+        helper.writeConfig(applicationContext,jsonString)
 
         // re-create UI
         // setupUI()
