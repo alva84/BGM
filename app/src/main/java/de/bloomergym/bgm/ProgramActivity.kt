@@ -94,17 +94,24 @@ class ProgramActivity  : AppCompatActivity() {
 
             params_TextTitle.width = screen_width / 3
             textTitle.layoutParams = params_TextTitle
-            //textTitle.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),(screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),0,(screen_width/resources.getDimension(R.dimen.gap_big)).toInt())
+            textTitle.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),
+                0,
+                0,
+                (screen_width/resources.getDimension(R.dimen.gap_big)).toInt())
 
             val params_TextDesc = textDesc.layoutParams
             params_TextDesc.width = screen_width / 3
             textDesc.layoutParams = params_TextDesc
-            //textDesc.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),0,0,(screen_width/resources.getDimension(R.dimen.gap_medium)).toInt())
+            textDesc.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),
+                0,
+                0,
+                (screen_width/resources.getDimension(R.dimen.gap_medium)).toInt())
 
             val params_TextFacts = textFact.layoutParams
             params_TextFacts.width = screen_width / 3
             textFact.layoutParams = params_TextFacts
-            //textFact.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),0,0,0)
+            textFact.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),
+                0,0,0)
         }
 
         //style texts

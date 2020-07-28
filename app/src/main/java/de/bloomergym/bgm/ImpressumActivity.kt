@@ -1,10 +1,12 @@
 package de.bloomergym.bgm
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
@@ -26,6 +28,39 @@ class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         mBtmView.selectedItemId = R.id.navigation_impressum
         mBtmView.setOnNavigationItemSelectedListener(this)
         helper = Helper(applicationContext)
+
+        setupUI()
+    }
+
+    fun setTextViewRobotoLight(res:Int){
+        val robotoLight = Typeface.createFromAsset(assets, "Roboto-Light.ttf")
+        val robotoLightItalic = Typeface.createFromAsset(assets, "Roboto-LightItalic.ttf")
+        val textView: TextView = findViewById(res)
+        textView.typeface = robotoLight
+    }
+
+    fun setTextViewRobotoLightItalic(res:Int){
+        val robotoLightItalic = Typeface.createFromAsset(assets, "Roboto-LightItalic.ttf")
+        val textView: TextView = findViewById(res)
+        textView.typeface = robotoLightItalic
+    }
+
+    fun setupUI(){
+        setTextViewRobotoLight(R.id.header_impressum)
+        setTextViewRobotoLight(R.id.impressum1)
+        setTextViewRobotoLight(R.id.impressum2)
+        setTextViewRobotoLight(R.id.impressum3)
+        setTextViewRobotoLight(R.id.impressum4)
+        setTextViewRobotoLight(R.id.impressum5)
+        setTextViewRobotoLight(R.id.impressum6)
+        setTextViewRobotoLight(R.id.impressum7)
+        setTextViewRobotoLight(R.id.impressum8)
+        setTextViewRobotoLight(R.id.impressum9)
+        setTextViewRobotoLight(R.id.impressum10)
+        setTextViewRobotoLight(R.id.impressum11)
+        setTextViewRobotoLight(R.id.impressum12)
+        setTextViewRobotoLight(R.id.impressum13)
+        setTextViewRobotoLight(R.id.impressum14)
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {

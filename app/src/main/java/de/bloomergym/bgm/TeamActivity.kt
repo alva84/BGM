@@ -30,7 +30,10 @@ class TeamActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     fun setupUI(){
-        val title:TextView = findViewById(R.id.textView_Team)
+        val robotoLight = Typeface.createFromAsset(assets, "Roboto-Light.ttf")
+        val robotoLightItalic = Typeface.createFromAsset(assets, "Roboto-LightItalic.ttf")
+
+        val title:TextView = findViewById(R.id.header_team)
         val sub:TextView = findViewById(R.id.textView_TeamSub)
 
         val l1:LinearLayout = findViewById(R.id.linearLayout1)
@@ -60,8 +63,6 @@ class TeamActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         var screen_width = Resources.getSystem().displayMetrics.widthPixels
 
-        val robotoLight = Typeface.createFromAsset(assets, "Roboto-Light.ttf")
-        val robotoLightItalic = Typeface.createFromAsset(assets, "Roboto-LightItalic.ttf")
 
         // Größen insgesamt
         val params = l1.layoutParams

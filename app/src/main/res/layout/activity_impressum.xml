@@ -28,6 +28,36 @@
             android:orientation="vertical"
             android:gravity="left">
 
+            <TextView
+                android:id="@+id/header_impressum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Impressum"
+                android:textSize="@dimen/font_size_big" />
+
+            <TextView
+                android:id="@+id/impressum1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Angaben gemäß § 5 TMG: "
+                android:textSize="@dimen/font_size_medium" />
+
+            <ImageView
+                android:id="@+id/bloomergym"
+                android:layout_width="140dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/schriftzug_bloomergym" />
+
+            <TextView
+                android:id="@+id/impressum2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="
+Messer Kathrin und Semmler Luisa Gbr \n Forststraße 8 \n 85368 Moosburg \n Deutschland \n servus@bloomergym.de  \n +49 176 66 55 76 20 \n USt-ID- Nummer: DE319500822 \n "
+                android:textSize="@dimen/font_size_small" />
+
+
             <Button
                 android:id="@+id/button"
                 android:layout_width="71dp"
@@ -36,43 +66,14 @@
                 android:text="test" />
 
             <TextView
-                android:id="@+id/textView_Team"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Impressum"
-                android:textSize="@dimen/font_size_big" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Angaben gemäß § 5 TMG: "
-                android:textSize="@dimen/font_size_medium" />
-
-            <ImageView
-                android:id="@+id/bloomergym"
-                android:layout_width="150dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/schriftzug_bloomergym" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="
-Messer Kathrin und Semmler Luisa Gbr \n Forststraße 8 \n 85368 Moosburg \n Deutschland \n servus@bloomergym.de  \n +49 176 66 55 76 20 \n USt-ID- Nummer: DE319500822 \n "
-                android:textSize="@dimen/font_size_small" />
-
-            <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/impressum3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Angaben zur Berufshaftpflichtversicherung"
                 android:textSize="@dimen/font_size_medium" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/impressum4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
@@ -82,13 +83,13 @@ Geltungsraum der Versicherung: Deutschland\n"
                 android:textSize="@dimen/font_size_small" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/impressum5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Disclaimer"
                 android:textSize="@dimen/font_size_medium" />
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/impressum6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
@@ -97,14 +98,14 @@ Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf dies
                 android:textSize="@dimen/font_size_small" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/impressum7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Haftung für Links"
                 android:textSize="@dimen/font_size_medium" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/impressum8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
@@ -114,14 +115,14 @@ Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konk
 
 
             ​<TextView
-            android:id="@+id/textView13"
+            android:id="@+id/impressum9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Urheberrecht"
             android:textSize="@dimen/font_size_medium" />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/impressum10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
@@ -130,14 +131,14 @@ Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden 
                 android:textSize="@dimen/font_size_small" />
 
             ​<TextView
-            android:id="@+id/textView15"
+            android:id="@+id/impressum11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bild- und Tonrechte"
             android:textSize="@dimen/font_size_medium" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/impressum12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
@@ -145,14 +146,14 @@ Kostenlose Bilder von Wix (mehr unter \nhttps://support.wix.com/de/article/nutzu
                 android:textSize="@dimen/font_size_small" />
 
             ​<TextView
-            android:id="@+id/textView17"
+            android:id="@+id/impressum13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Streitschlichtungsplattform"
             android:textSize="@dimen/font_size_medium" />
 
             <TextView
-                android:id="@+id/textView18"
+                android:id="@+id/impressum14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
