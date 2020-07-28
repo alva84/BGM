@@ -31,7 +31,7 @@ public class TeamListAdapter : ArrayAdapter<String> {
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var listItemView: View= inflater.inflate(R.layout.list_item_team, parent, false)
+        var listItemView: View= inflater.inflate(R.layout.list_item_team2, parent, false)
         val t: TextView = listItemView.findViewById(R.id.team_info)
         t.text = info_items?.get(position)
 

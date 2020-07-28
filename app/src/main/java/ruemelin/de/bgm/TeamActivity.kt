@@ -119,19 +119,19 @@ class TeamActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val list3 = getResources().getStringArray(R.array.team_jil)
         val list4 = getResources().getStringArray(R.array.team_alisa)
 
-        var adapter = TeamListAdapter(this, R.layout.list_item_team, list1, resources.getDimension(R.dimen.font_size_small2).toFloat(),
+        var adapter = TeamListAdapter(this, R.layout.list_item_team2, list1, resources.getDimension(R.dimen.font_size_small2).toFloat(),
             screen_width/4,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
         listView1.setAdapter(adapter)
 
-        adapter = TeamListAdapter(this, R.layout.list_item_team, list2, resources.getDimension(R.dimen.font_size_small2).toFloat(),
+        adapter = TeamListAdapter(this, R.layout.list_item_team2, list2, resources.getDimension(R.dimen.font_size_small2).toFloat(),
             screen_width/4,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
         listView2.setAdapter(adapter)
 
-        adapter = TeamListAdapter(this, R.layout.list_item_team, list3, resources.getDimension(R.dimen.font_size_small2).toFloat(),
+        adapter = TeamListAdapter(this, R.layout.list_item_team2, list3, resources.getDimension(R.dimen.font_size_small2).toFloat(),
             screen_width/4,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
         listView3.setAdapter(adapter)
 
-        adapter = TeamListAdapter(this, R.layout.list_item_team, list4, resources.getDimension(R.dimen.font_size_small2).toFloat(),
+        adapter = TeamListAdapter(this, R.layout.list_item_team2, list4, resources.getDimension(R.dimen.font_size_small2).toFloat(),
             screen_width/4,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
         listView4.setAdapter(adapter)
 
