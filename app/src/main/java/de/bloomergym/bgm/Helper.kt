@@ -1,11 +1,10 @@
-package ruemelin.de.bgm
+package de.bloomergym.bgm
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
 import android.util.Log
-import android.view.LayoutInflater
 import com.google.gson.Gson
 import java.io.*
 
@@ -19,14 +18,14 @@ class Helper {
         this.context=ctx
     }
 
-    public fun getMediaPath(media:String?):String{
-        val moviePath: String = getAppSpecificMovieDir(context)?.getAbsolutePath() + "/" + media
+    fun getMediaPath(media:String?):String{
+        val moviePath: String = getAppSpecificMovieDir(context)?.absolutePath + "/" + media
         Log.i("Kotlin", "Helper: Trying to load movie from " + moviePath)
         return moviePath
     }
 
     fun getLogoBitmap(company: String?): Bitmap? {
-        val imagePath: String = getAppSpecificPictureDir(context)?.getAbsolutePath() + "/" + "logo_" + company + ".png"
+        val imagePath: String = getAppSpecificPictureDir(context)?.absolutePath + "/" + "logo_" + company + ".png"
         Log.i("Kotlin", "Helper: Trying to load " + "logo_" + company + " from " + imagePath)
         try {
             return BitmapFactory.decodeFile(imagePath)
@@ -64,7 +63,7 @@ class Helper {
         return file
     }
 
-    public fun writeConfig(context:Context, json:String){
+    fun writeConfig(context:Context, json:String){
         val path = context.getExternalFilesDir(null)
         val configDirectory = File(path, config_folder)
         if (!configDirectory.exists()) {
@@ -72,10 +71,10 @@ class Helper {
         }
         val file = File(configDirectory, config_file)
 
-        FileOutputStream(file).use { it.write(json?.toByteArray())}
+        FileOutputStream(file).use { it.write(json.toByteArray())}
     }
 
-    public fun loadConfig():MyConfig{
+    fun loadConfig():MyConfig{
         lateinit var myConfig: MyConfig
 
         // val pathInt = ctx.getFilesDir()

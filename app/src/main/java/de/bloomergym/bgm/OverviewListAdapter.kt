@@ -1,4 +1,4 @@
-package ruemelin.de.bgm
+package de.bloomergym.bgm
 
 import android.content.Context
 import android.graphics.Typeface
@@ -10,7 +10,7 @@ import android.widget.Button
 
 
 //open public class CustomAdapter() : ArrayAdapter<String>(context:Context, ) {
-public class OverviewListAdapter : ArrayAdapter<String> {
+class OverviewListAdapter : ArrayAdapter<String> {
 
     private lateinit var c:Context
     private lateinit var inflater: LayoutInflater
@@ -18,7 +18,7 @@ public class OverviewListAdapter : ArrayAdapter<String> {
     private var height =0
     private var width = 0
     private var textSize:Float = 0F
-    private var padding = 0;
+    private var padding = 0
 
     constructor(ctx: Context, i:Int, p: Array<String?>, height: Int, width:Int, textsize:Float, padding:Int) : super(ctx,i,p){
         this.c=ctx
@@ -34,26 +34,26 @@ public class OverviewListAdapter : ArrayAdapter<String> {
         //Log.i("Kotlin", "CustomAdapter -> getView() with position = " + position + ", convertview = " + convertView +", parent = " + parent)
         var listItemView: View= inflater.inflate(R.layout.list_item_overview, parent, false)
         val b: Button = listItemView.findViewById(R.id.program_button)
-        b.text = programs?.get(position)
+        b.text = programs.get(position)
 
-        val params = b.getLayoutParams()
+        val params = b.layoutParams
         params.width = width
         params.height=height
 
-        b.setLayoutParams(params);
+        b.layoutParams = params
         b.setPadding(padding, padding, padding, padding)
 
-        b.setTextSize(textSize)
+        b.textSize = textSize
 
-        val robotoLight = Typeface.createFromAsset(context.getAssets(), "Roboto-Light.ttf")
-        b.setTypeface(robotoLight)
+        val robotoLight = Typeface.createFromAsset(context.assets, "Roboto-Light.ttf")
+        b.typeface = robotoLight
 
         return listItemView
     }
 
     override fun getItem(position: Int): String? {
         //TODO("test")
-        return programs?.get(position)!!;
+        return programs.get(position)!!
     }
 
     override fun getItemId(position: Int): Long {
@@ -63,10 +63,10 @@ public class OverviewListAdapter : ArrayAdapter<String> {
 
     override fun getCount(): Int {
         //TODO("test")
-        val size = programs?.size
+        val size = programs.size
         if(size != null) {
             return size}
-        else return 0;
+        else return 0
     }
 
 }

@@ -1,4 +1,4 @@
-package ruemelin.de.bgm
+package de.bloomergym.bgm
 
 import android.content.Intent
 import android.content.res.Resources
@@ -83,29 +83,29 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         companyLogo.setImageBitmap(companyLogoBitmap)
 
         var aokLogoBitmap: Bitmap? = null
-        var drawableAOKLogo : Drawable? = null;
+        var drawableAOKLogo : Drawable? = null
         if (helper.getLogoBitmap("aok_by") != null){
              aokLogoBitmap = helper.getLogoBitmap("aok_by")
             aokLogo.setImageBitmap(aokLogoBitmap)
         } else {
-            val resAOKLogo:Int = this.getResources().getIdentifier("logo_aok_by", "drawable", this.getPackageName())
+            val resAOKLogo:Int = this.resources.getIdentifier("logo_aok_by", "drawable", this.packageName)
             drawableAOKLogo = ResourcesCompat.getDrawable(resources, resAOKLogo, null)
             aokLogo.setImageDrawable(drawableAOKLogo)
         }
 
-        val screen_width = Resources.getSystem().getDisplayMetrics().widthPixels
-        val screen_height = Resources.getSystem().getDisplayMetrics().heightPixels
+        val screen_width = Resources.getSystem().displayMetrics.widthPixels
+        val screen_height = Resources.getSystem().displayMetrics.heightPixels
 
         if (currentCompanyTest?.AOK == true){
             // show AOK logo
-            logoAOK.isVisible=true;
+            logoAOK.isVisible=true
         } else{
             // hide AOK logo
             logoAOK?.isVisible=false
         }
 
         // resize company logo to 1/8 of screen height
-        val params_CompanyLogo = companyLogo.getLayoutParams()
+        val params_CompanyLogo = companyLogo.layoutParams
         params_CompanyLogo.height = screen_height/8
         /*if (drawableCompanyLogo != null) {
             params_CompanyLogo.width = drawableCompanyLogo.intrinsicWidth*screen_height/8/drawableCompanyLogo.intrinsicHeight
@@ -113,10 +113,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         if (companyLogoBitmap != null) {
             params_CompanyLogo.width = companyLogoBitmap.width*screen_height/8/companyLogoBitmap.height
         }
-        companyLogo.setLayoutParams(params_CompanyLogo)
+        companyLogo.layoutParams = params_CompanyLogo
 
         // resize AOK logo
-        val params_AOKLogo = aokLogo.getLayoutParams()
+        val params_AOKLogo = aokLogo.layoutParams
         params_AOKLogo.height = screen_height/8
         if (aokLogoBitmap != null) {
             params_AOKLogo.width = aokLogoBitmap.width*screen_height/8/aokLogoBitmap.height
@@ -125,17 +125,17 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 params_AOKLogo.width = drawableAOKLogo.intrinsicWidth*screen_height/8/drawableAOKLogo.intrinsicHeight
             }
         }
-        aokLogo.setLayoutParams(params_AOKLogo)
+        aokLogo.layoutParams = params_AOKLogo
 
         // resize recharge logo
-        val params_rechargeLogo = rechargeLogo.getLayoutParams()
+        val params_rechargeLogo = rechargeLogo.layoutParams
         params_rechargeLogo.height = screen_height/7*3
-        rechargeLogo.setLayoutParams(params_rechargeLogo)
+        rechargeLogo.layoutParams = params_rechargeLogo
 
         // resize recharge text
-        val params_rechargeText = rechargeText.getLayoutParams()
+        val params_rechargeText = rechargeText.layoutParams
         params_rechargeText.height = screen_height/8
-        rechargeText.setLayoutParams(params_rechargeText)
+        rechargeText.layoutParams = params_rechargeText
     }
 
     fun switchToOverview(view: View) {

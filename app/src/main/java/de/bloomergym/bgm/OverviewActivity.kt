@@ -1,4 +1,4 @@
-package ruemelin.de.bgm
+package de.bloomergym.bgm
 
 import android.content.Intent
 import android.content.res.Resources
@@ -42,10 +42,10 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
     }
 
     fun setupUI() {
-        var screen_width = Resources.getSystem().getDisplayMetrics().widthPixels
-        var screen_height = Resources.getSystem().getDisplayMetrics().heightPixels
+        var screen_width = Resources.getSystem().displayMetrics.widthPixels
+        var screen_height = Resources.getSystem().displayMetrics.heightPixels
 
-        var gridView: GridView = findViewById(R.id.gridView);
+        var gridView: GridView = findViewById(R.id.gridView)
         // TODO ggf. noch numColumns anpassen, default ist 3
 
         // Start working with config data
@@ -56,7 +56,7 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
                     "Kotlin", "Found match between " + c.getCompanyId() +
                             " and " + myConfig?.currentCompany +
                             "- looking for logo named logo_" + myConfig!!.currentCompany + ".png now"
-                );
+                )
             }
         }
         if (this.currentCompany != null){
@@ -65,7 +65,7 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
                 "Number of chosen programs to integrate: " + currentCompany?.chosen_programs?.size
             )
 
-            val size: Int? = currentCompany?.chosen_programs?.size;
+            val size: Int? = currentCompany?.chosen_programs?.size
 
             if (size != null) {
                 // get a string array of program names
@@ -73,10 +73,10 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
 
                 for (i in 0..size - 1) {
                     val p = currentCompany?.chosen_programs?.get(i)
-                    chosenPrograms[i] = p;
+                    chosenPrograms[i] = p
                 }
 
-                Log.i("Kotlin", "overviewactivity: create custom adapter with string-array chosenprograms (holds " + chosenPrograms.size + " items)");
+                Log.i("Kotlin", "overviewactivity: create custom adapter with string-array chosenprograms (holds " + chosenPrograms.size + " items)")
 
                 val adapter = OverviewListAdapter(this, R.layout.list_item_overview, chosenPrograms, screen_height/3, screen_width/3, (screen_width/resources.getDimension(R.dimen.font_overview)).toFloat(), screen_width/28)
                 gridView.adapter = adapter
@@ -84,7 +84,7 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
                 // add listeners to all items
                 gridView.onItemClickListener =
                     AdapterView.OnItemClickListener { parent, view, position, id ->
-                        Log.i("Kotlin", "overviewactivity: is this called?");
+                        Log.i("Kotlin", "overviewactivity: is this called?")
                     }
             }//if
         }//if
@@ -93,9 +93,9 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
     fun switchToProgram(view: View){
 
         var btn: Button? = view as Button?
-        val message = btn?.text;
+        val message = btn?.text
 
-        Log.i("Kotlin", "called switchToProgram for button labelled " + message);
+        Log.i("Kotlin", "called switchToProgram for button labelled " + message)
 
         val i = Intent(this, ProgramActivity::class.java).apply {
             putExtra(EXTRA_MESSAGE, message)
@@ -104,26 +104,26 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-        Log.i("Kotlin", "called OverviewActivity > onNaviagtionItemSelected. Selected item was "+ p0.itemId);
+        Log.i("Kotlin", "called OverviewActivity > onNaviagtionItemSelected. Selected item was "+ p0.itemId)
 
-        var i : Intent? = null;
+        var i : Intent? = null
 
         if (p0.itemId == R.id.navigation_home){
-            i = Intent(this, MainActivity::class.java);
+            i = Intent(this, MainActivity::class.java)
         }
         else if (p0.itemId == R.id.navigation_team){
-            i = Intent(this, TeamActivity::class.java);
+            i = Intent(this, TeamActivity::class.java)
         }
         else if (p0.itemId == R.id.navigation_impressum){
-            i = Intent(this, ImpressumActivity::class.java);
+            i = Intent(this, ImpressumActivity::class.java)
         }
 
         if (i != null) {
-            startActivity(i);
-            return true;
+            startActivity(i)
+            return true
         }
         else {
-            return false;
+            return false
         }
     }
 }

@@ -1,4 +1,4 @@
-package ruemelin.de.bgm
+package de.bloomergym.bgm
 
 import org.junit.Test
 

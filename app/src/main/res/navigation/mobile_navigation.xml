@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="ruemelin.de.bgm.ui.home.HomeFragment"
+        android:name="de.bloomergym.bgm.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_team"
-        android:name="ruemelin.de.bgm.ui.dashboard.DashboardFragment"
+        android:name="de.bloomergym.bgm.ui.dashboard.DashboardFragment"
         android:label="@string/title_team"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_impressum"
-        android:name="ruemelin.de.bgm.ui.notifications.NotificationsFragment"
+        android:name="de.bloomergym.bgm.ui.notifications.NotificationsFragment"
         android:label="@string/title_impressum"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

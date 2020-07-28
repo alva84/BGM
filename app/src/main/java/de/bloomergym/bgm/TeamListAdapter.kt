@@ -1,4 +1,4 @@
-package ruemelin.de.bgm
+package de.bloomergym.bgm
 
 import android.content.Context
 import android.graphics.Typeface
@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
-
-//open public class CustomAdapter() : ArrayAdapter<String>(context:Context, ) {
-public class TeamListAdapter : ArrayAdapter<String> {
+class TeamListAdapter : ArrayAdapter<String> {
 
     private lateinit var c:Context
     private lateinit var inflater: LayoutInflater
@@ -18,7 +16,7 @@ public class TeamListAdapter : ArrayAdapter<String> {
     private var height =0
     private var width = 0
     private var textSize:Float = 0F
-    private var padding = 0;
+    private var padding = 0
 
     constructor(ctx: Context, i:Int, p: Array<String?>, textsize: Float, width:Int, padding:Int) : super(ctx,i,p){ //height: Int
         this.c=ctx
@@ -33,28 +31,28 @@ public class TeamListAdapter : ArrayAdapter<String> {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var listItemView: View= inflater.inflate(R.layout.list_item_team2, parent, false)
         val t: TextView = listItemView.findViewById(R.id.team_info)
-        t.text = info_items?.get(position)
+        t.text = info_items.get(position)
 
-        val params = t.getLayoutParams()
+        val params = t.layoutParams
         params.width = width
-        t.setLayoutParams(params);
+        t.layoutParams = params
         t.setPadding(padding, padding, padding, padding)
 
         /*
         params.height=height
         */
 
-        t.setTextSize(textSize)
+        t.textSize = textSize
 
-        val robotoLight = Typeface.createFromAsset(context.getAssets(), "Roboto-Light.ttf")
-        t.setTypeface(robotoLight)
+        val robotoLight = Typeface.createFromAsset(context.assets, "Roboto-Light.ttf")
+        t.typeface = robotoLight
 
         return listItemView
     }
 
     override fun getItem(position: Int): String? {
         //TODO("test")
-        return info_items?.get(position)!!;
+        return info_items.get(position)!!
     }
 
     override fun getItemId(position: Int): Long {
@@ -64,10 +62,10 @@ public class TeamListAdapter : ArrayAdapter<String> {
 
     override fun getCount(): Int {
         //TODO("test")
-        val size = info_items?.size
+        val size = info_items.size
         if(size != null) {
             return size}
-        else return 0;
+        else return 0
     }
 
 }

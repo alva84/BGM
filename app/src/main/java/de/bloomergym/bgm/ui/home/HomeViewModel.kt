@@ -1,4 +1,4 @@
-package ruemelin.de.bgm.ui.home
+package de.bloomergym.bgm.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
