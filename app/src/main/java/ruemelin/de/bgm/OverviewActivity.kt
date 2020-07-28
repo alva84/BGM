@@ -10,8 +10,6 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.gson.Gson
-import java.io.*
 
 
 class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
@@ -80,7 +78,7 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
 
                 Log.i("Kotlin", "overviewactivity: create custom adapter with string-array chosenprograms (holds " + chosenPrograms.size + " items)");
 
-                val adapter = CustomAdapter(this, R.layout.overview_item, chosenPrograms, screen_height/3, screen_width/3, (screen_width/resources.getDimension(R.dimen.font_overview)).toFloat(), screen_width/28)
+                val adapter = OverviewListAdapter(this, R.layout.list_item_overview, chosenPrograms, screen_height/3, screen_width/3, (screen_width/resources.getDimension(R.dimen.font_overview)).toFloat(), screen_width/28)
                 gridView.adapter = adapter
 
                 // add listeners to all items

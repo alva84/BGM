@@ -139,5 +139,4 @@ class Helper {
         return myConfig
     }
 
-
 }

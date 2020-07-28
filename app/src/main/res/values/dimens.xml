@@ -5,6 +5,12 @@
   <dimen name="font_small">60dp</dimen>
   <dimen name="font_overview">30dp</dimen>
 
+  <dimen name="font_size_big">24sp</dimen>
+  <dimen name="font_size_medium">20sp</dimen>
+  <dimen name="font_size_medium2">18sp</dimen>
+  <dimen name="font_size_small">16sp</dimen>
+  <dimen name="font_size_small2">5sp</dimen>
+
   <dimen name="gap_big">10dp</dimen>
   <dimen name="gap_medium">30dp</dimen>
   <dimen name="gap_small">50dp</dimen>

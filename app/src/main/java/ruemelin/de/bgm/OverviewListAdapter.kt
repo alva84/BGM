@@ -10,7 +10,7 @@ import android.widget.Button
 
 
 //open public class CustomAdapter() : ArrayAdapter<String>(context:Context, ) {
-public class CustomAdapter : ArrayAdapter<String> {
+public class OverviewListAdapter : ArrayAdapter<String> {
 
     private lateinit var c:Context
     private lateinit var inflater: LayoutInflater
@@ -32,7 +32,7 @@ public class CustomAdapter : ArrayAdapter<String> {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         //Log.i("Kotlin", "CustomAdapter -> getView() with position = " + position + ", convertview = " + convertView +", parent = " + parent)
-        var listItemView: View= inflater.inflate(R.layout.overview_item, parent, false)
+        var listItemView: View= inflater.inflate(R.layout.list_item_overview, parent, false)
         val b: Button = listItemView.findViewById(R.id.program_button)
         b.text = programs?.get(position)
 

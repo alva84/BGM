@@ -14,6 +14,7 @@ import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.setPadding
 import com.google.gson.Gson
+import java.io.FileNotFoundException
 import java.io.IOException
 
 class ProgramActivity  : AppCompatActivity() {
@@ -61,13 +62,15 @@ class ProgramActivity  : AppCompatActivity() {
         textFact.text = program?.getProgramFact()
 
         // set video
-        // get resource id for video, based on config file, and set video file accordingly
-        // -> leads e.g. to R.raw.logo_flughafen
-
-        //val resVideo:Int = this.getResources().getIdentifier(program?.media, "raw", this.getPackageName());
-        //video.setVideoPath("android.resource://" + getPackageName() + "/" + resVideo);
-
-        video.setVideoPath(helper.getMediaPath(program?.media))
+        try {
+            video.setVideoPath(helper.getMediaPath(program?.media))
+        } catch (e: FileNotFoundException)
+        { // todo: delete else case, access via resources only for testing
+                // get resource id for video, based on config file, and set video file accordingly
+                // -> leads e.g. to R.raw.logo_flughafen
+                val resVideo:Int = this.getResources().getIdentifier(program?.media, "raw", this.getPackageName());
+                video.setVideoPath("android.resource://" + getPackageName() + "/" + resVideo);
+            }
         val mediaController = MediaController(this)
         //mediaController.isShowing
         video.setMediaController(mediaController);
@@ -77,30 +80,35 @@ class ProgramActivity  : AppCompatActivity() {
         //resize everything
         if(this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             val params_Video = video.getLayoutParams()
-            Log.i("Kotlin", "ProgramActivity: aktuell: " + params_Video.width + ", soll: " + screen_width  *2/3)
+            Log.i("Kotlin", "ProgramActivity: Video aktuell: " + params_Video.width +
+                    ", soll: " + screen_width  *2/3)
 
             params_Video.width = screen_width  *2/3
             video.setLayoutParams(params_Video)
             video.setPadding(
                 (screen_width/resources.getDimension(R.dimen.gap_small)).toInt(),
                 (screen_width/resources.getDimension(R.dimen.gap_small)).toInt(),
-                0,
+                (screen_width/resources.getDimension(R.dimen.gap_small)).toInt(),
                 0)
 
             val params_TextTitle = textTitle.getLayoutParams()
+
+            Log.i("Kotlin", "ProgramActivity: Title aktuell: " + params_TextTitle.width +
+                    ", soll: " + screen_width  /3)
+
             params_TextTitle.width = screen_width / 3
             textTitle.setLayoutParams(params_TextTitle)
-            textTitle.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),(screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),0,(screen_width/resources.getDimension(R.dimen.gap_big)).toInt())
+            //textTitle.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),(screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),0,(screen_width/resources.getDimension(R.dimen.gap_big)).toInt())
 
             val params_TextDesc = textDesc.getLayoutParams()
             params_TextDesc.width = screen_width / 3
             textDesc.setLayoutParams(params_TextDesc)
-            textDesc.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),0,0,(screen_width/resources.getDimension(R.dimen.gap_medium)).toInt())
+            //textDesc.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),0,0,(screen_width/resources.getDimension(R.dimen.gap_medium)).toInt())
 
             val params_TextFacts = textFact.getLayoutParams()
             params_TextFacts.width = screen_width / 3
             textFact.setLayoutParams(params_TextFacts)
-            textFact.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),0,0,0)
+            //textFact.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),0,0,0)
         }
 
         //style texts

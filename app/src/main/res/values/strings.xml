@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BGM by bloomergym</string>
+    <string name="app_name">BGM by bloomer|gym</string>
     <string name="title_home">Home</string>
     <string name="title_team">Team</string>
     <string name="title_impressum">Impressum</string>
@@ -7,5 +7,36 @@
     <string name="title_activity_impressum">Impressum</string>
 
     <string name="koop_string">in Kooperation mit</string>
+
+    <string-array name="team_kathrin">
+        <item>M.A. Prävention und Gesundheitsmanagement</item>
+        <item>Schwerpunkt: Stressmanagement und Sportpsychologie</item>
+        <item>Sport- und Bewegungstherapeutin DVGS</item>
+        <item>Präventives Rückentraining und Sportrehabilitation</item>
+        <item>Personal Trainerin</item>
+        <item>Group Fitness Instructor: Les Mills Kurse, Cycling</item>
+        <item>Blackroll® Moves Instructor</item>
+    </string-array>
+
+    <string-array name="team_tamara">
+        <item>B.A. Prävention und Gesundheitsmanagement</item>
+        <item>aktuell M.A. Prävention und Gesundheitsmanagement</item>
+        <item>Sport- und Bewegungstherapeutin DVGS Orthopädie</item>
+        <item>Pilates- und Entspannungstrainerin nach §20 SGB V</item>
+        <item>Freiberufliche Mitarbeiterin</item>
+    </string-array>
+
+    <string-array name="team_jil">
+        <item>Gymnasiallehrerin für Sport und Mathe</item>
+        <item>Fitnesstrainerin</item>
+        <item>Blackroll® meets Yoga Instructor</item>
+        <item>Freiberufliche Mitarbeiterin</item>
+    </string-array>
+
+    <string-array name="team_alisa">
+        <item>Vinyasa-Yoga Lehrerin (200 YTT)</item>
+        <item>Transformational Coach</item>
+        <item>Trainerin für Transformation, Stressmanagement und Kommunikation</item>
+    </string-array>
 
 </resources>
