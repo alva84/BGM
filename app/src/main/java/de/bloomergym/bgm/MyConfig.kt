@@ -16,6 +16,22 @@ class MyConfig{
         this.companies = Companies
         this.programs = Programs
     }
+
+    fun addChosenProgram(p:String){
+        companies?.forEach { c ->
+            if (c.getCompanyId() == currentCompany) {
+                c.chosen_programs?.add(p)
+            }
+        }
+    }
+
+    fun removeChosenProgram(p:String){
+        companies?.forEach { c ->
+            if (c.getCompanyId() == currentCompany) {
+                c.chosen_programs?.remove(p)
+            }
+        }
+    }
 }
 
 
@@ -24,11 +40,11 @@ class Company
     var id:String = "" //only lowercase
     var name:String = "" // as printed
     var AOK: Boolean?= null
-    var chosen_programs: List<String>? = null
+    var chosen_programs: MutableList<String>? = null
 
     constructor() : super()
 
-    constructor(Id: String, Name: String, AOK: Boolean, Programs: List<String>) : super() {
+    constructor(Id: String, Name: String, AOK: Boolean, Programs: MutableList<String>) : super() {
         this.id=Id
         this.name = Name
         this.AOK = AOK

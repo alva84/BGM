@@ -66,11 +66,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         // Start working with config data
         myConfig.companies?.forEach { c -> if(c.getCompanyId()==myConfig.currentCompany)
-        { this.currentCompanyTest=c
-            Log.i("Kotlin","Found match between "+ c.getCompanyId() + " and " +myConfig.currentCompany + "- looking for logo named logo_" + myConfig.currentCompany+".png now")
+        { this.currentCompanyTest=c }
+        else {} //Log.i("Kotlin", c.getCompanyId() + " does not match " +myConfig.currentCompany)
         }
-        else { //Log.i("Kotlin", c.getCompanyId() + " does not match " +myConfig.currentCompany)
-        }}
 
         // get resource id based on config file and set the logo accordingly, leads e.g. to R.drawable.logo_flughafen
         /*val resCompanyLogo:Int = this.getResources().getIdentifier("logo_" + myConfig.currentCompany, "drawable", this.getPackageName())

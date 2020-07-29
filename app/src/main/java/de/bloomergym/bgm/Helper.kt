@@ -166,7 +166,7 @@ class Helper {
         // now read from fileinputstream and fill myConfig
         try {
             val inputAsString = fis.bufferedReader().use { it.readText() }
-            Log.i("Kotlin", "Helper: read from stored file config.json: " + inputAsString)
+            //Log.i("Kotlin", "Helper: read from stored file config.json: " + inputAsString)
             val gson = Gson()
             myConfig = gson.fromJson(inputAsString, MyConfig::class.java)
         } catch (e: FileNotFoundException) {

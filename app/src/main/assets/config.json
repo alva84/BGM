@@ -59,6 +59,13 @@
 			"description": "Nach einem Power Nap bist du wie ausgewechselt...",
 			"health_fact": "Wusstest du, dass schon wenige Minuten...?",
 			"star_average": "4.9"
+		},
+		{
+			"name": "Testübung",
+			"media": "cat1.mov",
+			"description": "Nach einem Power Nap bist du wie ausgewechselt...",
+			"health_fact": "Wusstest du, dass schon wenige Minuten...?",
+			"star_average": "4.9"
 		}
 	]
 }

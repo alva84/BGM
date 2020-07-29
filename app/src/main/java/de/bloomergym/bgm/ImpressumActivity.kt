@@ -83,7 +83,6 @@ class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-        Log.i("Kotlin", "called ImpressumActivity > onNaviagtionItemSelected. Selected item was "+ p0.itemId)
 
         var i : Intent? = null
 
@@ -111,22 +110,6 @@ class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         startActivity(i)
     }
 
-    fun toggleCompany(v: View) {
 
-        myConfig = helper.loadConfig()
-        //change value locally and in file
-        if (myConfig.currentCompany == "flughafen"){
-            myConfig.currentCompany = "fraunhofer"
-        }
-        else if (myConfig.currentCompany == "fraunhofer"){
-            myConfig.currentCompany = "flughafen"
-        }
-        val gson = Gson()
-        val jsonString = gson.toJson(myConfig)
 
-        helper.writeConfig(applicationContext,jsonString)
-
-        // re-create UI
-        // setupUI()
-    }
 }
