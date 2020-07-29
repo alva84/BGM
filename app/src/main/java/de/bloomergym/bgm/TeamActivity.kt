@@ -2,20 +2,21 @@ package de.bloomergym.bgm
 
 import android.content.Intent
 import android.content.res.Resources
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
 
 class TeamActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
 
     private lateinit var mBtmView: BottomNavigationView
-    var list1: ArrayList<String>? = null
+    private lateinit var helper:Helper
+    private lateinit var linearLayout:LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,44 +26,31 @@ class TeamActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         mBtmView = findViewById(R.id.nav_view)
         mBtmView.selectedItemId = R.id.navigation_team
         mBtmView.setOnNavigationItemSelectedListener(this)
+        helper = Helper(applicationContext)
+        linearLayout = findViewById(R.id.linear_layout_team)
 
         setupUI()
     }
 
-    fun setupUI(){
-        val robotoLight = Typeface.createFromAsset(assets, "Roboto-Light.ttf")
-        val robotoLightItalic = Typeface.createFromAsset(assets, "Roboto-LightItalic.ttf")
-
-        val title:TextView = findViewById(R.id.header_team)
-        val sub:TextView = findViewById(R.id.textView_TeamSub)
-
+    private fun setupUI(){
         val l1:LinearLayout = findViewById(R.id.linearLayout1)
         val l2:LinearLayout = findViewById(R.id.linearLayout2)
         val l3:LinearLayout = findViewById(R.id.linearLayout3)
         val l4:LinearLayout = findViewById(R.id.linearLayout4)
 
-        val name1:TextView = findViewById(R.id.textView1_1)
-        val function1:TextView = findViewById(R.id.textView1_2)
         val image1:ImageView = findViewById(R.id.imageView1)
         val listView1: ListView = findViewById<View>(R.id.listView1) as ListView
 
-        val name2:TextView = findViewById(R.id.textView2_1)
-        val function2:TextView = findViewById(R.id.textView2_2)
         val image2:ImageView = findViewById(R.id.imageView2)
         val listView2: ListView = findViewById<View>(R.id.listView2) as ListView
 
-        val name3:TextView = findViewById(R.id.textView3_1)
-        val function3:TextView = findViewById(R.id.textView3_2)
         val image3:ImageView = findViewById(R.id.imageView3)
         val listView3: ListView = findViewById<View>(R.id.listView3) as ListView
 
-        val name4:TextView = findViewById(R.id.textView4_1)
-        val function4:TextView = findViewById(R.id.textView4_2)
         val image4:ImageView = findViewById(R.id.imageView4)
         val listView4: ListView = findViewById<View>(R.id.listView4) as ListView
 
-        var screen_width = Resources.getSystem().displayMetrics.widthPixels
-
+        val screen_width = Resources.getSystem().displayMetrics.widthPixels
 
         // Größen insgesamt
         val params = l1.layoutParams
@@ -98,21 +86,32 @@ class TeamActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         image4.setPadding(0, (screen_width/resources.getDimension(R.dimen.gap_small)).toInt(),
             0, (screen_width/resources.getDimension(R.dimen.gap_small)).toInt())
 
-        // Fonts
-        title.typeface = robotoLight
-        sub.typeface = robotoLightItalic
+        // Fonts and text sizes
+        helper.setTextSizeBig(applicationContext, linearLayout,R.id.header_team)
+        helper.setTextViewRobotoLight(assets, linearLayout,R.id.header_team)
 
-        name1.typeface = robotoLight
-        function1.typeface = robotoLightItalic
+        helper.setTextSizeMedium(applicationContext, linearLayout,R.id.textView_TeamSub)
+        helper.setTextViewRobotoLightItalic(assets, linearLayout,R.id.textView_TeamSub)
 
-        name2.typeface = robotoLight
-        function2.typeface = robotoLightItalic
+        helper.setTextSizeMedium(applicationContext, linearLayout,R.id.textView1_1)
+        helper.setTextViewRobotoLight(assets, linearLayout,R.id.textView1_1)
+        helper.setTextSizeMedium(applicationContext, linearLayout,R.id.textView1_2)
+        helper.setTextViewRobotoLightItalic(assets, linearLayout,R.id.textView1_2)
 
-        name3.typeface = robotoLight
-        function3.typeface = robotoLightItalic
+        helper.setTextSizeMedium(applicationContext, linearLayout,R.id.textView2_1)
+        helper.setTextViewRobotoLight(assets, linearLayout,R.id.textView2_1)
+        helper.setTextSizeMedium(applicationContext, linearLayout,R.id.textView2_2)
+        helper.setTextViewRobotoLightItalic(assets, linearLayout,R.id.textView2_2)
 
-        name4.typeface = robotoLight
-        function4.typeface = robotoLightItalic
+        helper.setTextSizeMedium(applicationContext, linearLayout,R.id.textView3_1)
+        helper.setTextViewRobotoLight(assets, linearLayout,R.id.textView3_1)
+        helper.setTextSizeMedium(applicationContext, linearLayout,R.id.textView3_2)
+        helper.setTextViewRobotoLightItalic(assets, linearLayout,R.id.textView3_2)
+
+        helper.setTextSizeMedium(applicationContext, linearLayout,R.id.textView4_1)
+        helper.setTextViewRobotoLight(assets, linearLayout,R.id.textView4_1)
+        helper.setTextSizeMedium(applicationContext, linearLayout,R.id.textView4_2)
+        helper.setTextViewRobotoLightItalic(assets, linearLayout,R.id.textView4_2)
 
         // Beschreibungen
         val list1 = resources.getStringArray(R.array.team_kathrin)
@@ -120,20 +119,24 @@ class TeamActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val list3 = resources.getStringArray(R.array.team_jil)
         val list4 = resources.getStringArray(R.array.team_alisa)
 
-        var adapter = TeamListAdapter(this, R.layout.list_item_team2, list1, resources.getDimension(R.dimen.font_size_small2).toFloat(),
-            screen_width/4,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
+        var adapter = TeamListAdapter(this, R.layout.list_item_team2, list1,
+            (screen_width/applicationContext.resources.getDimension(R.dimen.font_small2)),
+            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
         listView1.adapter = adapter
 
-        adapter = TeamListAdapter(this, R.layout.list_item_team2, list2, resources.getDimension(R.dimen.font_size_small2).toFloat(),
-            screen_width/4,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
+        adapter = TeamListAdapter(this, R.layout.list_item_team2, list2,
+            (screen_width/applicationContext.resources.getDimension(R.dimen.font_small2)),
+            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
         listView2.adapter = adapter
 
-        adapter = TeamListAdapter(this, R.layout.list_item_team2, list3, resources.getDimension(R.dimen.font_size_small2).toFloat(),
-            screen_width/4,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
+        adapter = TeamListAdapter(this, R.layout.list_item_team2, list3,
+            (screen_width/applicationContext.resources.getDimension(R.dimen.font_small2)),
+            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
         listView3.adapter = adapter
 
-        adapter = TeamListAdapter(this, R.layout.list_item_team2, list4, resources.getDimension(R.dimen.font_size_small2).toFloat(),
-            screen_width/4,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
+        adapter = TeamListAdapter(this, R.layout.list_item_team2, list4,
+            (screen_width/applicationContext.resources.getDimension(R.dimen.font_small2)),
+            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
         listView4.adapter = adapter
 
     }

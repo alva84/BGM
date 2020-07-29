@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <dimen name="font_big">24dp</dimen>
+  <!-- calculate according to screen size -->
+  <dimen name="font_big">26dp</dimen>
   <dimen name="font_medium">40dp</dimen>
   <dimen name="font_small">60dp</dimen>
+  <dimen name="font_small2">70dp</dimen>
   <dimen name="font_overview">30dp</dimen>
 
+  <!-- absolute values -->
   <dimen name="font_size_big">24sp</dimen>
   <dimen name="font_size_medium">20sp</dimen>
   <dimen name="font_size_medium2">18sp</dimen>
   <dimen name="font_size_small">16sp</dimen>
   <dimen name="font_size_small2">5sp</dimen>
 
+  <!-- calculate according to screen size -->
   <dimen name="gap_big">10dp</dimen>
   <dimen name="gap_medium">30dp</dimen>
   <dimen name="gap_small">50dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
 </resources>

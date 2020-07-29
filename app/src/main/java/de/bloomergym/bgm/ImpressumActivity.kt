@@ -1,23 +1,23 @@
 package de.bloomergym.bgm
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
+import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
-
 
 class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
 
     private lateinit var mBtmView: BottomNavigationView
     private lateinit var myConfig: MyConfig
     private lateinit var helper:Helper
-    val config = "config.json"
+    private lateinit var linearLayout:LinearLayout;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,39 +28,58 @@ class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         mBtmView.selectedItemId = R.id.navigation_impressum
         mBtmView.setOnNavigationItemSelectedListener(this)
         helper = Helper(applicationContext)
+        linearLayout =  findViewById(R.id.linear_layout_impressum)
 
         setupUI()
     }
 
-    fun setTextViewRobotoLight(res:Int){
-        val robotoLight = Typeface.createFromAsset(assets, "Roboto-Light.ttf")
-        val robotoLightItalic = Typeface.createFromAsset(assets, "Roboto-LightItalic.ttf")
-        val textView: TextView = findViewById(res)
-        textView.typeface = robotoLight
-    }
-
-    fun setTextViewRobotoLightItalic(res:Int){
-        val robotoLightItalic = Typeface.createFromAsset(assets, "Roboto-LightItalic.ttf")
-        val textView: TextView = findViewById(res)
-        textView.typeface = robotoLightItalic
-    }
-
     fun setupUI(){
-        setTextViewRobotoLight(R.id.header_impressum)
-        setTextViewRobotoLight(R.id.impressum1)
-        setTextViewRobotoLight(R.id.impressum2)
-        setTextViewRobotoLight(R.id.impressum3)
-        setTextViewRobotoLight(R.id.impressum4)
-        setTextViewRobotoLight(R.id.impressum5)
-        setTextViewRobotoLight(R.id.impressum6)
-        setTextViewRobotoLight(R.id.impressum7)
-        setTextViewRobotoLight(R.id.impressum8)
-        setTextViewRobotoLight(R.id.impressum9)
-        setTextViewRobotoLight(R.id.impressum10)
-        setTextViewRobotoLight(R.id.impressum11)
-        setTextViewRobotoLight(R.id.impressum12)
-        setTextViewRobotoLight(R.id.impressum13)
-        setTextViewRobotoLight(R.id.impressum14)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.header_impressum)
+        helper.setTextSizeBig(applicationContext, linearLayout, R.id.header_impressum)
+        //setTextSizeBig(R.id.header_impressum)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum1)
+        helper.setTextSizeMedium(applicationContext, linearLayout, R.id.impressum1)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum1_1)
+        helper.setTextSizeSmall(applicationContext, linearLayout, R.id.impressum1_1)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum2)
+        helper.setTextSizeMedium(applicationContext, linearLayout, R.id.impressum2)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum2_1)
+        helper.setTextSizeSmall(applicationContext, linearLayout, R.id.impressum2_1)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum3)
+        helper.setTextSizeMedium(applicationContext, linearLayout, R.id.impressum3)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum3_1)
+        helper.setTextSizeSmall(applicationContext, linearLayout, R.id.impressum3_1)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum4)
+        helper.setTextSizeMedium(applicationContext, linearLayout, R.id.impressum4)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum4_1)
+        helper.setTextSizeSmall(applicationContext, linearLayout, R.id.impressum4_1)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum5)
+        helper.setTextSizeMedium(applicationContext, linearLayout, R.id.impressum5)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum5_1)
+        helper.setTextSizeSmall(applicationContext, linearLayout, R.id.impressum5_1)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum6)
+        helper.setTextSizeMedium(applicationContext, linearLayout, R.id.impressum6)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum6_1)
+        helper.setTextSizeSmall(applicationContext, linearLayout, R.id.impressum6_1)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum7)
+        helper.setTextSizeMedium(applicationContext, linearLayout, R.id.impressum7)
+
+        helper.setTextViewRobotoLight(assets, linearLayout, R.id.impressum7_1)
+        helper.setTextSizeSmall(applicationContext, linearLayout, R.id.impressum7_1)
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
@@ -87,7 +106,12 @@ class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
     }
 
-    fun switchCompany(view: View) {
+    fun goToConfig(v: View) {
+        val i = Intent(this, ConfigActivity::class.java)
+        startActivity(i)
+    }
+
+    fun toggleCompany(v: View) {
 
         myConfig = helper.loadConfig()
         //change value locally and in file
@@ -98,8 +122,7 @@ class ImpressumActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
             myConfig.currentCompany = "flughafen"
         }
         val gson = Gson()
-        var jsonString = gson.toJson(myConfig)
-
+        val jsonString = gson.toJson(myConfig)
 
         helper.writeConfig(applicationContext,jsonString)
 

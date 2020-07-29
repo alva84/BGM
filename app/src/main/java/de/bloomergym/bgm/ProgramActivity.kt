@@ -57,6 +57,16 @@ class ProgramActivity  : AppCompatActivity() {
         textDesc.text = program?.getProgramDesc()
         textFact.text = program?.getProgramFact()
 
+        //style texts
+        textTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/resources.getDimension(R.dimen.font_big)).toFloat())
+        textDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/resources.getDimension(R.dimen.font_small)).toFloat())
+        textFact.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/resources.getDimension(R.dimen.font_small)).toFloat())
+
+        textTitle.typeface = robotoLight
+        textTitle.isAllCaps = true
+        textDesc.typeface = robotoLight
+        textFact.typeface = robotoLightItalic
+
         // set video
         try {
             video.setVideoPath(helper.getMediaPath(program?.media))
@@ -90,9 +100,9 @@ class ProgramActivity  : AppCompatActivity() {
             val params_TextTitle = textTitle.layoutParams
 
             Log.i("Kotlin", "ProgramActivity: Title aktuell: " + params_TextTitle.width +
-                    ", soll: " + screen_width  /3)
+                    ", soll: " + screen_width  /10*3)
 
-            params_TextTitle.width = screen_width / 3
+            params_TextTitle.width = screen_width / 10*3
             textTitle.layoutParams = params_TextTitle
             textTitle.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),
                 0,
@@ -100,7 +110,7 @@ class ProgramActivity  : AppCompatActivity() {
                 (screen_width/resources.getDimension(R.dimen.gap_big)).toInt())
 
             val params_TextDesc = textDesc.layoutParams
-            params_TextDesc.width = screen_width / 3
+            params_TextDesc.width = screen_width / 10*3
             textDesc.layoutParams = params_TextDesc
             textDesc.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),
                 0,
@@ -114,15 +124,7 @@ class ProgramActivity  : AppCompatActivity() {
                 0,0,0)
         }
 
-        //style texts
-        textTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/resources.getDimension(R.dimen.font_big)).toFloat())
-        textDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/resources.getDimension(R.dimen.font_small)).toFloat())
-        textFact.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/resources.getDimension(R.dimen.font_small)).toFloat())
 
-        textTitle.typeface = robotoLight
-        textTitle.isAllCaps = true
-        textDesc.typeface = robotoLight
-        textFact.typeface = robotoLightItalic
 
     }//fun
 

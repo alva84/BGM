@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ImpressumActivity">
+    tools:context=".ImpressumActivity"
+    android:background="@android:color/white">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
@@ -18,23 +19,29 @@
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/linear_layout_impressum"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/header_impressum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Impressum" />
+
+        <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="left">
-
-            <TextView
-                android:id="@+id/header_impressum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Impressum"
-                android:textSize="@dimen/font_size_big" />
 
             <TextView
                 android:id="@+id/impressum1"
@@ -45,12 +52,12 @@
 
             <ImageView
                 android:id="@+id/bloomergym"
-                android:layout_width="140dp"
+                android:layout_width="130dp"
                 android:layout_height="25dp"
                 app:srcCompat="@drawable/schriftzug_bloomergym" />
 
             <TextView
-                android:id="@+id/impressum2"
+                android:id="@+id/impressum1_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
@@ -59,37 +66,43 @@ Messer Kathrin und Semmler Luisa Gbr \n Forststraße 8 \n 85368 Moosburg \n Deut
 
 
             <Button
-                android:id="@+id/button"
-                android:layout_width="71dp"
+                android:id="@+id/buttonToggle"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:onClick="switchCompany"
-                android:text="test" />
+                android:onClick="toggleCompany"
+                android:text="switch flughafen und fraunhofer" />
+            <Button
+                android:id="@+id/buttonConfig"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="goToConfig"
+                android:text="go to config" />
+
 
             <TextView
-                android:id="@+id/impressum3"
+                android:id="@+id/impressum2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Angaben zur Berufshaftpflichtversicherung"
                 android:textSize="@dimen/font_size_medium" />
 
             <TextView
-                android:id="@+id/impressum4"
+                android:id="@+id/impressum2_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
-Name und Sitz des Versicherers:\n
-folgt bald.\n
+Name und Sitz des Versicherers: folgt bald.\n
 Geltungsraum der Versicherung: Deutschland\n"
                 android:textSize="@dimen/font_size_small" />
 
             <TextView
-                android:id="@+id/impressum5"
+                android:id="@+id/impressum3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Disclaimer"
                 android:textSize="@dimen/font_size_medium" />
             <TextView
-                android:id="@+id/impressum6"
+                android:id="@+id/impressum3_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
@@ -98,14 +111,14 @@ Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf dies
                 android:textSize="@dimen/font_size_small" />
 
             <TextView
-                android:id="@+id/impressum7"
+                android:id="@+id/impressum4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Haftung für Links"
                 android:textSize="@dimen/font_size_medium" />
 
             <TextView
-                android:id="@+id/impressum8"
+                android:id="@+id/impressum4_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
@@ -115,14 +128,14 @@ Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konk
 
 
             ​<TextView
-            android:id="@+id/impressum9"
+            android:id="@+id/impressum5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Urheberrecht"
             android:textSize="@dimen/font_size_medium" />
 
             <TextView
-                android:id="@+id/impressum10"
+                android:id="@+id/impressum5_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
@@ -131,14 +144,14 @@ Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden 
                 android:textSize="@dimen/font_size_small" />
 
             ​<TextView
-            android:id="@+id/impressum11"
+            android:id="@+id/impressum6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bild- und Tonrechte"
             android:textSize="@dimen/font_size_medium" />
 
             <TextView
-                android:id="@+id/impressum12"
+                android:id="@+id/impressum6_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
@@ -146,14 +159,14 @@ Kostenlose Bilder von Wix (mehr unter \nhttps://support.wix.com/de/article/nutzu
                 android:textSize="@dimen/font_size_small" />
 
             ​<TextView
-            android:id="@+id/impressum13"
+            android:id="@+id/impressum7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Streitschlichtungsplattform"
             android:textSize="@dimen/font_size_medium" />
 
             <TextView
-                android:id="@+id/impressum14"
+                android:id="@+id/impressum7_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="
@@ -162,5 +175,5 @@ Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS
 
         </LinearLayout>
     </ScrollView>
-
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

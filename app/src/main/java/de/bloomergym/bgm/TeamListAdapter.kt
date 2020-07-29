@@ -36,7 +36,7 @@ class TeamListAdapter : ArrayAdapter<String> {
         val params = t.layoutParams
         params.width = width
         t.layoutParams = params
-        t.setPadding(padding, padding, padding, padding)
+        t.setPadding(0, padding, 0, padding)
 
         /*
         params.height=height

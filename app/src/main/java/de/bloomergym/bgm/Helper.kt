@@ -3,11 +3,13 @@ package de.bloomergym.bgm
 import android.app.Activity
 import android.content.Context
 import android.content.res.AssetManager
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.os.Environment
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -22,6 +24,36 @@ class Helper {
 
     constructor(ctx: Context) {
         this.context=ctx
+    }
+
+    fun setTextViewRobotoLight(assets:AssetManager, v:View, res:Int){
+        val robotoLight = Typeface.createFromAsset(assets, "Roboto-Light.ttf")
+        val textView: TextView = v.findViewById(res)
+        textView.typeface = robotoLight
+    }
+
+    fun setTextViewRobotoLightItalic(assets:AssetManager, v:View, res:Int){
+        val robotoLightItalic = Typeface.createFromAsset(assets, "Roboto-LightItalic.ttf")
+        val textView: TextView = v.findViewById(res)
+        textView.typeface = robotoLightItalic
+    }
+
+    fun setTextSizeSmall(ctx: Context, v:View, res:Int){
+        var screen_width = Resources.getSystem().displayMetrics.widthPixels
+        val textView: TextView = v.findViewById(res)
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/ctx.resources.getDimension(R.dimen.font_small)).toFloat())
+    }
+
+    fun setTextSizeMedium(ctx: Context, v:View, res:Int){
+        var screen_width = Resources.getSystem().displayMetrics.widthPixels
+        val textView: TextView = v.findViewById(res)
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/ctx.resources.getDimension(R.dimen.font_medium)).toFloat())
+    }
+
+    fun setTextSizeBig(ctx: Context, v:View, res:Int){
+        var screen_width = Resources.getSystem().displayMetrics.widthPixels
+        val textView: TextView = v.findViewById(res)
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/ctx.resources.getDimension(R.dimen.font_big)).toFloat())
     }
 
     fun getMediaPath(media:String?):String{
