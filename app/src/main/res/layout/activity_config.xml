@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TeamActivity"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    tools:context=".TeamActivity">
 
     <LinearLayout
         android:id="@+id/linear_layout_team"
@@ -13,32 +13,69 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/header_config"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Konfiguration" />
+        <TextView
+            android:id="@+id/header_config"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Konfiguration" />
+
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Firmen" />
+
+                <Button
+                    android:id="@+id/buttonAddCompany"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="addCompany"
+                    android:text="Neue Firma hinzufügen" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup_config"
+                    android:layout_width="500dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    app:layout_constraintStart_toStartOf="parent">
+
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
 
-            <RadioGroup
-                android:id="@+id/radioGroup_config"
-                android:layout_width="500dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                app:layout_constraintStart_toStartOf="parent" >
-
-
-            </RadioGroup>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Übungen" />
+            <Button
+                    android:id="@+id/buttonAddProgram"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="addProgram"
+                    android:text="Neues Programm hinzufügen" />
 
                 <ListView
                     android:id="@+id/listView_config"
@@ -47,14 +84,8 @@
 
                 </ListView>
 
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Neues Programm hinzufügen"
-                    android:onClick="addProgram"/>
             </LinearLayout>
-
+            </LinearLayout>
         </ScrollView>
 
     </LinearLayout>

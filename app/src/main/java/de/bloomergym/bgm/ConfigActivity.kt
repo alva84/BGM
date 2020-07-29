@@ -62,8 +62,6 @@ class ConfigActivity : AppCompatActivity() {
             // This puts the value (true/false) into the variable
             val isChecked = checkedRadioButton.isChecked
             // If the radiobutton that has changed in check state is now checked...
-            Log.i("Kotlin","ConfigActivity: " + checkedRadioButton.text
-                    + " has been checked, change checkboxes and currentComp in json")
 
             // write change to json
             myConfig.currentCompany= checkedRadioButton.text.toString()
@@ -88,8 +86,6 @@ class ConfigActivity : AppCompatActivity() {
     }
 
     fun setupPrograms(programs:List<Program>?){
-
-        Log.i("Kotlin","ConfigActivity: setupPrograms ")
 
         var list = emptyArray<String?>()
         if (programs != null){
@@ -122,16 +118,13 @@ class ConfigActivity : AppCompatActivity() {
         var cb: CheckBox? = view as CheckBox?
         if (cb!!.isChecked()) {
             // checked
-            Log.i("Kotlin", "ConfigActivity: "+cb.text +" was checked")
             // change chosen program list in myconfig for current comp
             myConfig.addChosenProgram(cb.text as String);
             updateJson();
-            Log.i("Kotlin", "ConfigActivity: todo")
         }
         else
         {
             // not checked
-            Log.i("Kotlin", "ConfigActivity: "+cb.text +" was unchecked")
             myConfig.removeChosenProgram(cb.text as String);
             updateJson();
         }
@@ -155,8 +148,26 @@ class ConfigActivity : AppCompatActivity() {
         return comp
     }
 
+    fun addCompany(v: View) {
+        Log.i("Kotlin","ConfigActivity: add company")
+
+        val text = "Geht noch nicht. Neue Firma in Datei config.json einfügen!"
+        val duration = Toast.LENGTH_SHORT
+
+        val toast = Toast.makeText(applicationContext, text, duration)
+        toast.show()
+
+    }
 
     fun addProgram(v: View) {
+        Log.i("Kotlin","ConfigActivity: add program")
+
+        val text = "Geht noch nicht. Neue Übungen in Datei config.json einfügen!"
+        val duration = Toast.LENGTH_SHORT
+
+        val toast = Toast.makeText(applicationContext, text, duration)
+        toast.show()
+
 
     }
 }
