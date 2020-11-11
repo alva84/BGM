@@ -121,22 +121,22 @@ class TeamActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         var adapter = TeamListAdapter(this, R.layout.list_item_team2, list1,
             (screen_width/applicationContext.resources.getDimension(R.dimen.font_small2)),
-            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
+            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_very_small).toInt())
         listView1.adapter = adapter
 
         adapter = TeamListAdapter(this, R.layout.list_item_team2, list2,
             (screen_width/applicationContext.resources.getDimension(R.dimen.font_small2)),
-            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
+            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_very_small).toInt())
         listView2.adapter = adapter
 
         adapter = TeamListAdapter(this, R.layout.list_item_team2, list3,
             (screen_width/applicationContext.resources.getDimension(R.dimen.font_small2)),
-            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
+            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_very_small).toInt())
         listView3.adapter = adapter
 
         adapter = TeamListAdapter(this, R.layout.list_item_team2, list4,
             (screen_width/applicationContext.resources.getDimension(R.dimen.font_small2)),
-            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_small).toInt())
+            screen_width/5,screen_width/resources.getDimension(R.dimen.gap_very_small).toInt())
         listView4.adapter = adapter
 
     }

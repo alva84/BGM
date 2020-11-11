@@ -78,7 +78,9 @@ class OverviewActivity : AppCompatActivity(), BottomNavigationView.OnNavigationI
 
                 Log.i("Kotlin", "overviewactivity: create custom adapter with string-array chosenprograms (holds " + chosenPrograms.size + " items)")
 
-                val adapter = OverviewListAdapter(this, R.layout.list_item_overview, chosenPrograms, screen_height/3, screen_width/3, (screen_width/resources.getDimension(R.dimen.font_overview)).toFloat(), screen_width/28)
+                val adapter = OverviewListAdapter(this, R.layout.list_item_overview, chosenPrograms,
+                    screen_height/3, screen_width/3, (screen_width/resources.getDimension(R.dimen.font_overview)).toFloat(),
+                    screen_width/32)
                 gridView.adapter = adapter
 
                 // add listeners to all items

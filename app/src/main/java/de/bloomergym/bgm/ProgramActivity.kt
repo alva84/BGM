@@ -7,16 +7,19 @@ import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.util.TypedValue
-import android.widget.MediaController
-import android.widget.TextView
-import android.widget.VideoView
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.io.FileNotFoundException
+
 
 class ProgramActivity  : AppCompatActivity() {
 
     private lateinit var myConfig: MyConfig
     private lateinit var helper:Helper
+    private lateinit var video:VideoView
+    private lateinit var playButton:ImageButton
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,16 +31,18 @@ class ProgramActivity  : AppCompatActivity() {
         myConfig = helper.loadConfig()
 
         setupUI(programName)
-    }
+    } //fun
 
-    fun setupUI(programName: String) {
-        var screen_width = Resources.getSystem().displayMetrics.widthPixels
-        var screen_height = Resources.getSystem().displayMetrics.heightPixels
+    private fun setupUI(programName: String) {
+        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
+        //val screenHeight = Resources.getSystem().displayMetrics.heightPixels
 
-        val video:VideoView = findViewById(R.id.videoView)
-        var textTitle: TextView = findViewById(R.id.textTitle)
-        var textDesc: TextView = findViewById(R.id.textDesc)
-        var textFact: TextView = findViewById(R.id.textFacts)
+        video = findViewById(R.id.videoView)
+        playButton = findViewById(R.id.play_button)
+
+        val textTitle: TextView = findViewById(R.id.textTitle)
+        val textDesc: TextView = findViewById(R.id.textDesc)
+        val textFact: TextView = findViewById(R.id.textFacts)
 
         val robotoLight = Typeface.createFromAsset(assets, "Roboto-Light.ttf")
         val robotoLightItalic = Typeface.createFromAsset(assets, "Roboto-LightItalic.ttf")
@@ -46,11 +51,11 @@ class ProgramActivity  : AppCompatActivity() {
         myConfig.programs?.forEach { p ->
             if (p.getProgramName() == programName) {
                 program = p
-                Log.i("Kotlin","Found match between " + p.getProgramName() + " and " + programName)
+                Log.i("Kotlin", "Found match between " + p.getProgramName() + " and " + programName)
             }//if
         }//forEach
 
-        if (program==null){ Log.i("Kotlin", "ProgramActivity: found no match for " + programName); }
+        if (program==null){ Log.i("Kotlin", "ProgramActivity: found no match for $programName"); }
 
         // set texts
         textTitle.text = program?.getProgramName()
@@ -58,75 +63,127 @@ class ProgramActivity  : AppCompatActivity() {
         textFact.text = program?.getProgramFact()
 
         //style texts
-        textTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/resources.getDimension(R.dimen.font_big)).toFloat())
-        textDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/resources.getDimension(R.dimen.font_small)).toFloat())
-        textFact.setTextSize(TypedValue.COMPLEX_UNIT_SP, (screen_width/resources.getDimension(R.dimen.font_small)).toFloat())
+        textTitle.setTextSize(
+            TypedValue.COMPLEX_UNIT_SP,
+            (screenWidth / resources.getDimension(R.dimen.font_big))
+        )
+        textDesc.setTextSize(
+            TypedValue.COMPLEX_UNIT_SP,
+            (screenWidth / resources.getDimension(R.dimen.font_medium))
+        )
+        textFact.setTextSize(
+            TypedValue.COMPLEX_UNIT_SP,
+            (screenWidth / resources.getDimension(R.dimen.font_medium))
+        )
 
         textTitle.typeface = robotoLight
         textTitle.isAllCaps = true
         textDesc.typeface = robotoLight
         textFact.typeface = robotoLightItalic
 
+        val videoWidth = 0.8
+
         // set video
-        try {
-            video.setVideoPath(helper.getMediaPath(program?.media))
-        } catch (e: FileNotFoundException)
-        { // todo: delete else case, access via resources only for testing
-                // get resource id for video, based on config file, and set video file accordingly
-                // -> leads e.g. to R.raw.logo_flughafen
-                val resVideo:Int = this.resources.getIdentifier(program?.media, "raw", this.packageName)
-            video.setVideoPath("android.resource://" + packageName + "/" + resVideo)
-        }
-        val mediaController = MediaController(this)
-        //mediaController.isShowing
-        video.setMediaController(mediaController)
-        video.requestFocus()
-        video.start()
+        this.setupVideo(program?.media, screenWidth * videoWidth)
 
         //resize everything
         if(this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            val params_Video = video.layoutParams
-            Log.i("Kotlin", "ProgramActivity: Video aktuell: " + params_Video.width +
-                    ", soll: " + screen_width  *2/3)
 
-            params_Video.width = screen_width  *2/3
-            video.layoutParams = params_Video
-            video.setPadding(
-                (screen_width/resources.getDimension(R.dimen.gap_small)).toInt(),
-                (screen_width/resources.getDimension(R.dimen.gap_small)).toInt(),
-                (screen_width/resources.getDimension(R.dimen.gap_small)).toInt(),
-                0)
-
-            val params_TextTitle = textTitle.layoutParams
-
-            Log.i("Kotlin", "ProgramActivity: Title aktuell: " + params_TextTitle.width +
-                    ", soll: " + screen_width  /10*3)
-
-            params_TextTitle.width = screen_width / 10*3
-            textTitle.layoutParams = params_TextTitle
-            textTitle.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),
+            val paramsTextTitle = textTitle.layoutParams
+            paramsTextTitle.width = (screenWidth * videoWidth).toInt()
+            textTitle.layoutParams = paramsTextTitle
+            textTitle.setPadding(
+                (screenWidth / resources.getDimension(R.dimen.gap_small)).toInt(),
+                (screenWidth / resources.getDimension(R.dimen.gap_small)).toInt(),
                 0,
-                0,
-                (screen_width/resources.getDimension(R.dimen.gap_big)).toInt())
+                (screenWidth / resources.getDimension(R.dimen.gap_small)).toInt()
+            )
 
-            val params_TextDesc = textDesc.layoutParams
-            params_TextDesc.width = screen_width / 10*3
-            textDesc.layoutParams = params_TextDesc
-            textDesc.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),
-                0,
-                0,
-                (screen_width/resources.getDimension(R.dimen.gap_medium)).toInt())
 
-            val params_TextFacts = textFact.layoutParams
-            params_TextFacts.width = screen_width / 3
-            textFact.layoutParams = params_TextFacts
-            textFact.setPadding((screen_width/resources.getDimension(R.dimen.gap_medium)).toInt(),
-                0,0,0)
+            val paramsTextdesc = textDesc.layoutParams
+
+            paramsTextdesc.width = (screenWidth * (1 - videoWidth)).toInt()
+            textDesc.layoutParams = paramsTextdesc
+            textDesc.setPadding(
+                (screenWidth / resources.getDimension(R.dimen.gap_very_small)).toInt(),
+                (screenWidth / resources.getDimension(R.dimen.gap_small)).toInt(),
+                (screenWidth / resources.getDimension(R.dimen.gap_very_small)).toInt(),
+                (screenWidth / resources.getDimension(R.dimen.gap_medium)).toInt()
+            )
+
+            val paramsTextfacts = textFact.layoutParams
+            paramsTextfacts.width = (screenWidth * (1 - videoWidth)).toInt()
+            textFact.layoutParams = paramsTextfacts
+            textFact.setPadding(
+                (screenWidth / resources.getDimension(R.dimen.gap_very_small)).toInt(),
+                0,
+                (screenWidth / resources.getDimension(R.dimen.gap_very_small)).toInt(),
+                (screenWidth / resources.getDimension(R.dimen.gap_very_small)).toInt()
+            )
         }
-
 
 
     }//fun
 
+    private fun setupVideo(media: String?, width:Double) {
+        //load video
+        try {
+            video.setVideoPath(helper.getMediaPath(media))
+        } catch (e: FileNotFoundException)
+        { // todo: delete else case, access via resources only for testing
+            // get resource id for video, based on config file, and set video file accordingly
+            // -> leads e.g. to R.raw.logo_flughafen
+            val resVideo:Int = this.resources.getIdentifier(
+                media,
+                "raw",
+                this.packageName
+            )
+            video.setVideoPath("android.resource://$packageName/$resVideo")
+        }
 
+        video.requestFocus()
+        //video.start() -> start with button
+        video.seekTo(10)
+        video.setOnCompletionListener {
+            resetVideo()
+        }
+
+        //resize
+        if(this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            val paramsVideo = video.layoutParams
+            paramsVideo.width = (width).toInt()
+            video.layoutParams = paramsVideo
+            video.setPadding(//l t r b
+                0, 0, 0, 0
+            )
+        }//if
+    }//fun
+
+    private fun startVideo(){
+        video.start()
+        playButton.visibility = View.GONE
+
+        // add controls
+        val mediaController = MediaController(this)
+        video.setMediaController(mediaController)
+        mediaController.setMediaPlayer(video)
+    }
+    private fun resetVideo(){
+
+        video.seekTo(10)
+        playButton.visibility = View.VISIBLE
+    }
+
+    private fun pressPlay(view: View) {
+        Log.i("Kotlin", "ProgramActivity: called pressPlay")
+
+        if (video.isPlaying) {
+            Log.i("Kotlin", "ProgramActivity: if - should never be called")
+
+            video.stopPlayback()
+        } else {
+            Log.i("Kotlin", "ProgramActivity: else")
+            startVideo()
+        }
+    }//fun
 }

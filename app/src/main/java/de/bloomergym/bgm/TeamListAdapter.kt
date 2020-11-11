@@ -34,7 +34,7 @@ class TeamListAdapter : ArrayAdapter<String> {
         t.text = info_items.get(position)
 
         val params = t.layoutParams
-        params.width = width
+        params.width = width-2*padding
         t.layoutParams = params
         t.setPadding(0, padding, 0, padding)
 
